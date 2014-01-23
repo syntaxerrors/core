@@ -33,7 +33,7 @@ return array(
 	|
 	| Set this to the site's control room data.  Get this from stygian or riddles
 	*/
-	'controlRoomDetail' => 'CONTROL_ANIMA',
+	'controlRoomDetail' => 'SET_THIS',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -45,7 +45,7 @@ return array(
 	|
 	*/
 
-	'siteName' => 'Anima',
+	'siteName' => 'YOUR_SITE',
 	'siteIcon' => null,
 
 	/*
@@ -59,7 +59,7 @@ return array(
 	|
 	*/
 
-	'primaryRepo' => 'Anima',
+	'primaryRepo' => 'Core',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -71,6 +71,9 @@ return array(
 	*/
 
 	'allRepos' => array(
+		'syntaxerrors' => array(
+			'core'         => 'Core',
+		),
 		'riddles8888' => array(
 			'control-room' => 'Control-Room',
 			'stygianvault' => 'StygianVault',
@@ -80,7 +83,7 @@ return array(
 			'LaravelBase'  => 'Laravel Base',
 		),
 		'stygiansabyss' => array(
-			'Anima' => 'Anima'
+			'Anima'        => 'Anima'
 		),
 	),
 
@@ -97,10 +100,16 @@ return array(
 	*/
 	'menu' => 'utopian',
 
+	/*
+	|--------------------------------------------------------------------------
+	| Application Menu
+	|--------------------------------------------------------------------------
+	|
+	| Use the following array to stop core from setting certain classes and keep
+	| the laravel defaults.  A common use for thie would be 'User'.
+	|
+	*/
 	'nonCoreAliases' => array(
-		'User',
-		'Chat',
-		'Chat_Room',
 	),
 
 );
