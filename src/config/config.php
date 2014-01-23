@@ -33,7 +33,7 @@ return array(
 	|
 	| Set this to the site's control room data.  Get this from stygian or riddles
 	*/
-	'controlRoomDetail' => 'SET_THIS',
+	'controlRoomDetail' => 'CONTROL_ANIMA',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -45,7 +45,7 @@ return array(
 	|
 	*/
 
-	'siteName' => 'YOUR_SITE',
+	'siteName' => 'Anima',
 	'siteIcon' => null,
 
 	/*
@@ -59,7 +59,7 @@ return array(
 	|
 	*/
 
-	'primaryRepo' => 'Core',
+	'primaryRepo' => 'Anima',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -71,8 +71,11 @@ return array(
 	*/
 
 	'allRepos' => array(
+		'stygiansabyss' => array(
+			'Anima'        => 'Anima'
+		),
 		'syntaxerrors' => array(
-			'core'         => 'Core',
+			'core'         => 'Core Package',
 		),
 		'riddles8888' => array(
 			'control-room' => 'Control-Room',
@@ -81,9 +84,6 @@ return array(
 			'dev-toolbox'  => 'Dev-Toolbox',
 			'core'         => 'Core',
 			'LaravelBase'  => 'Laravel Base',
-		),
-		'stygiansabyss' => array(
-			'Anima'        => 'Anima'
 		),
 	),
 
@@ -110,6 +110,9 @@ return array(
 	|
 	*/
 	'nonCoreAliases' => array(
+		'User',
+		'Chat',
+		'Chat_Room',
 	),
 
 );
