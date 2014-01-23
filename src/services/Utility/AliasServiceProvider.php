@@ -71,7 +71,11 @@ class AliasServiceProvider extends ServiceProvider {
 		$appAliases = \Config::get('core::nonCoreAliases');
 
 		foreach ($aliases as $alias => $class) {
-			if (!in_array($alias, $appAliases)) {
+			if (!is_null($appAliases)) {
+				if (!in_array($alias, $appAliases)) {
+					\Illuminate\Foundation\AliasLoader::getInstance()->alias($alias, $class);
+				}
+			} else {
 				\Illuminate\Foundation\AliasLoader::getInstance()->alias($alias, $class);
 			}
 		}
