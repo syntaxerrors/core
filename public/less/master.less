@@ -25,23 +25,23 @@
 @siteStyle: dark;
 
 .imports (@siteStyle) when (@siteStyle = dark) {
-    @import (less) "../../vendor/darkstrap3/darkstrap.css";
+    @import (less) "../../../../../public/vendor/darkstrap3/darkstrap.css";
 }
 
 // Cross-browser compatibility
 @import "prefixer.less";
 
-@import "../../vendor/bootstrap3/less/bootstrap";
+@import "../../../../../public/vendor/bootstrap3/less/bootstrap";
 
 // Site style based importing
 .imports(@siteStyle);
 
 // Bring in utopian menu
-@import (less) "menu.css";
+@import (less) "../css/menu.css";
 
 // Custom changes to bootstrap/darkstrap
 @import "master_mixins";
 
 // Fuel UX wizard mixins
-@import "../../vendor/fuelux/dist/less/variables";
-@import "../../vendor/fuelux/dist/less/wizard";
+@import "../../../../../public/vendor/fuelux/dist/less/variables";
+@import "../../../../../public/vendor/fuelux/dist/less/wizard";
