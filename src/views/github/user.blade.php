@@ -1,0 +1,1 @@
+@include('github.components.issues', array('branchReadable' => $activeUser->username))
