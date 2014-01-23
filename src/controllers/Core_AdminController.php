@@ -734,7 +734,7 @@ class Core_AdminController extends BaseController {
 
         if ($input != null) {
             $masterLess = base_path() .'/vendor/syntax/core/public/less/master.less';
-            $masterCss  = base_path() .'/vendor/syntax/core/public/css/master.css';#5097b5
+            $masterCss  = public_path() .'/css/master.css';#5097b5
 
             $lines = file($masterLess);
 

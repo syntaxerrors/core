@@ -17,7 +17,7 @@
 	@if (isset($activeUser) && File::exists($activeUser->theme))
 		{{ HTML::style($activeUser->themeStyle) }}
 	@else
-		{{ HTML::style('/css/master3/master.css') }}
+		{{ HTML::style('/css/master.css') }}
 	@endif
 	{{ HTML::style('http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css') }}
 
