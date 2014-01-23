@@ -711,7 +711,7 @@ class Core_AdminController extends BaseController {
 
     public function getTheme()
     {
-        $masterLess = public_path() .'/css/master3/master.less';
+        $masterLess = base_path() .'/vendor/syntax/core/public/less/master.less';
 
         $lines = file($masterLess);
 
@@ -733,8 +733,8 @@ class Core_AdminController extends BaseController {
         $input = e_array(Input::all());
 
         if ($input != null) {
-            $masterLess = public_path() .'/css/master3/master.less';
-            $masterCss  = public_path() .'/css/master3/master.css';#5097b5
+            $masterLess = base_path() .'/vendor/syntax/core/public/less/master.less';
+            $masterCss  = base_path() .'/vendor/syntax/core/public/css/master.css';#5097b5
 
             $lines = file($masterLess);
 

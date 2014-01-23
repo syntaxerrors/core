@@ -178,8 +178,8 @@ class Core_UserController extends BaseController {
 
     public function getChangeTheme()
     {
-        $lessTemplate = public_path() .'/css/master3/template.less';
-        $userLess     = public_path() .'/css/master3/users/'. Str::studly($this->activeUser->username) .'_css.less';
+        $lessTemplate = base_path() .'/vendor/syntax/core/public/less/template.less';
+        $userLess     = public_path() .'/css/users/'. Str::studly($this->activeUser->username) .'_css.less';
 
         // Make a copy of the less file
         if (!File::exists($userLess)) {
@@ -206,8 +206,8 @@ class Core_UserController extends BaseController {
         $input = e_array(Input::all());
 
         if ($input != null) {
-            $userLess = public_path() .'/css/master3/users/'. Str::studly($this->activeUser->username) .'_css.less';
-            $userCss  = public_path() .'/css/master3/users/'. Str::studly($this->activeUser->username) .'.css';
+            $userLess = public_path() .'/css/users/'. Str::studly($this->activeUser->username) .'_css.less';
+            $userCss  = public_path() .'/css/users/'. Str::studly($this->activeUser->username) .'.css';
 
             $lines = file($userLess);
 
@@ -237,7 +237,7 @@ class Core_UserController extends BaseController {
 
     public function getResetCss()
     {
-        $userLess = public_path() .'/css/master3/users/'. Str::studly($this->activeUser->username) .'.css';
+        $userLess = public_path() .'/css/users/'. Str::studly($this->activeUser->username) .'.css';
 
         File::delete($userLess);
 
