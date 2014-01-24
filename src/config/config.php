@@ -33,7 +33,7 @@ return array(
 	|
 	| Set this to the site's control room data.  Get this from stygian or riddles
 	*/
-	'controlRoomDetail' => 'CONTROL_ANIMA',
+	'controlRoomDetail' => 'GET_THIS_FROM_CONTROL',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -45,7 +45,7 @@ return array(
 	|
 	*/
 
-	'siteName' => 'Anima',
+	'siteName' => 'YOUR_SITE',
 	'siteIcon' => null,
 
 	/*
@@ -59,7 +59,7 @@ return array(
 	|
 	*/
 
-	'primaryRepo' => 'Anima',
+	'primaryRepo' => 'Core Package',
 
 	/*
 	|--------------------------------------------------------------------------
