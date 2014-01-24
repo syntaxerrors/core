@@ -151,6 +151,10 @@ class Utility_Collection extends Illuminate\Database\Eloquent\Collection {
 	{
 		$selectArray = array();
 
+		if ($firstOptionText != false) {
+			$selectArray[0] = $firstOptionText;
+		}
+
 		foreach ($this->items as $item) {
 			$selectArray[$item->{$id}] = $item->{$name};
 		}
