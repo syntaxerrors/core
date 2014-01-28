@@ -102,101 +102,54 @@
 					{{ $posts->links() }}
 				@endif
 			</div>
-			<table class="table table-condensed table-hover table-striped">
-				<thead>
-					<tr>
-						<th style="width: 8%;" colspan="2">&nbsp;</th>
-						<th class="text-left">Subject/Author</th>
-						<th class="text-center" style="width: 14%;">Replies/Views</th>
-						<th style="width:22%;" class="text-left">Last Post</th>
-					</tr>
-				</thead>
-				<tbody>
-					@if (count($announcements) > 0)
-						@foreach ($announcements as $announcement)
-							<tr class="error">
-								<td class="text-center text-middle">{{ $announcement->icon }}</td>
-								<td>
-									@if (!$announcement->checkUserViewed($activeUser->id))
-										<i class="fa fa-eye" title="New"></i>
-									@else
-										&nbsp;
-									@endif
-								</td>
-								<td>
-									{{ HTML::link('forum/post/view/'. $announcement->uniqueId, $announcement->name) }}<br />
-									<small>Started by {{ HTML::link('/user/view/'. $announcement->author->id, $announcement->author->username) }}</small>
-								</td>
-								<td class="text-center">
-									<small>
-										{{ $announcement->repliesCount .' '. Str::plural('Reply', $announcement->repliesCount) }}
-										<br />
-										{{ $announcement->views .' '. Str::plural('View', $announcement->views) }}
-									</small>
-								</td>
-								<td>
-									<?php
-										$lastUpdateType = $announcement->lastUpdate->type->keyName;
-										$lastUpdateUser = ($announcement->lastUpdate->morph_id == null || $lastUpdateType == 'application'
-											? $announcement->lastUpdate->author : $announcement->lastUpdate->morph);
-										$lastUpdateName = ($lastUpdateUser instanceof User ? $lastUpdateUser->username : $lastUpdateUser->name);
-									?>
-									<small>
-										{{ $announcement->lastUpdate->created_at }}<br />
-										by {{ HTML::link('/user/view/'. $announcement->lastUpdate->author->id, $lastUpdateName) }}
-									</small>
-								</td>
-						@endforeach
-					@endif
-					@if (count($posts) > 0)
-						@foreach ($posts as $post)
-							<tr>
-								<td class="text-center text-middle">
-									@if ($board->category->forum_category_type_id == Forum_Category::TYPE_SUPPORT)
-										{{ $post->status->icon }}
-									@else
-										{{ $post->icon }}
-									@endif
-								</td>
-								<td>
-									@if (!$post->checkUserViewed($activeUser->id))
-										<i class="fa fa-eye" title="New"></i>
-									@else
-										&nbsp;
-									@endif
-								</td>
-								<td>
-									{{ HTML::link('forum/post/view/'. $post->id, $post->name) }}
-									@if ($post->forum_post_type_id == Forum_Post::TYPE_APPLICATION && $post->approvedFlag == 0)
-										{{ HTML::link('forum/post/modify/'. $post->id .'/approvedFlag/1', 'Unapproved', array('class' => 'label label-important')) }}
-									@endif
+			<div class="labels">
+				<div class="subject">Subject/Author</div>
+				<div class="replies">Replies/Views</div>
+				<div class="lastPost">LastPost</div>
+				<div class="clearfix"></div>
+			</div>
+			<ul class="forum">
+				@if (count($announcements) > 0)
+					@foreach ($announcements as $announcement)
+						<li class="{{ $announcement->classes }}">
+							<div class="post">
+								<div class="subject">
+									{{ $announcement->link }}
 									<br />
-									<small>Started by {{ HTML::link('/user/view/'. $post->author->id, $post->author->username) }}</small>
-								</td>
-								<td class="text-center">
-									<small>
-										{{ $post->repliesCount .' '. Str::plural('Reply', $post->repliesCount) }}
-										<br />
-										{{ $post->views .' '. Str::plural('View', $post->views) }}
-									</small>
-								</td>
-								<td>
-									<?php
-										$lastUpdateType = $post->lastUpdate->type->keyName;
-										$lastUpdateUser = ($post->lastUpdate->morph_id == null || $lastUpdateType == 'application'
-											? $post->lastUpdate->author : $post->lastUpdate->morph);
-										$lastUpdateName = (getRootClass($lastUpdateUser) == 'User' ? $lastUpdateUser->username : $lastUpdateUser->name);
-									?>
-									<small>
-										{{ $post->lastUpdate->created_at }}<br />
-										by {{ HTML::link('/user/view/'. $post->lastUpdate->author->id, $lastUpdateName) }}
-									</small>
-								</td>
-							</tr>
-						@endforeach
-					@endif
-				</tbody>
-			</table>
+									{{ $announcement->startedBy }}
+								</div>
+								<div class="replies">
+									{{ $announcement->repliesBlock }}
+								</div>
+								<div class="lastPost">
+									{{ $announcement->lastPostBlock }}
+								</div>
+								<div class="clearfix"></div>
+							</div>
+						</li>
+					@endforeach
+				@endif
+				@if (count($posts) > 0)
+					@foreach ($posts as $post)
+						<li class="{{ $post->classes }}">
+							<div class="post">
+								<div class="subject">
+									{{ $post->link }}
+									<br />
+									{{ $post->startedBy }}
+								</div>
+								<div class="replies">
+									{{ $post->repliesBlock }}
+								</div>
+								<div class="lastPost">
+									{{ $post->lastPostBlock }}
+								</div>
+								<div class="clearfix"></div>
+							</div>
+						</li>
+					@endforeach
+				@endif
+			</ul>
 			<div class="panel-footer text-center">
 				@if ($posts->getTotal() > 30)
 					{{ $posts->links() }}

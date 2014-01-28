@@ -585,6 +585,125 @@ input[type="color"]:focus,
     vertical-align: middle !important;
 }
 /*
+/////////////////////////////////////////////////////// Forums /////////////////////////////////////////////////////////
+*/
+div.labels {
+  margin-left: 25px;
+  display: block;
+  div {
+    display: block;
+    &.subject {
+      width: 70%;
+      display: block;
+      float: left;
+    }
+    &.replies {
+      width: 15%;
+      float: left;
+    }
+    &.lastPost {
+      width: 15%;
+      float: left;
+    }
+  }
+}
+ul.forum {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-weight: inherit;
+  font-style: inherit;
+  font-size: 100%;
+  font-family: inherit;
+  vertical-align: baseline;
+  display: block;
+  li {
+    position: relative;
+    height: auto;
+    padding: 0;
+    margin: 2px 0px 0px;
+    border: none;
+    border-left: 6px solid @grey;
+    vertical-align: baseline;
+    .transition-duration(0.3s);
+    &:hover {
+      background: rgba(red(@grey), green(@grey), blue(@grey), .4);
+    }
+    &.announcement:before {
+      content: '';
+      background: saturate(lighten(@errorColor, 15%), 40%) !important;
+      position: absolute;
+      top: 0;
+      left: -6px;
+      width: 6px;
+      height: 100%;
+      box-shadow: 0 0 40px saturate(lighten(@errorColor, 15%), 40%) !important;
+    }
+    &.sticky:before {
+      content: '';
+      background: saturate(lighten(@warningColor, 15%), 40%) !important;
+      position: absolute;
+      top: 0;
+      left: -6px;
+      width: 6px;
+      height: 100%;
+      box-shadow: 0 0 40px saturate(lighten(@warningColor, 15%), 40%) !important;
+    }
+    &.application:before {
+      content: '';
+      background: saturate(lighten(@infoColor, 15%), 40%) !important;
+      position: absolute;
+      top: 0;
+      left: -6px;
+      width: 6px;
+      height: 100%;
+      box-shadow: 0 0 40px saturate(lighten(@infoColor, 15%), 40%) !important;
+    }
+    &.unread:before, &:hover:before {
+      content: '';
+      background: saturate(lighten(@primaryColor, 15%), 40%);
+      position: absolute;
+      top: 0;
+      left: -6px;
+      width: 6px;
+      height: 100%;
+      box-shadow: 0 0 40px saturate(lighten(@primaryColor, 15%), 40%);
+    }
+    div {
+      display: block;
+      &.post {
+        padding: 13px 0 13px 20px;
+        width: 100%;
+        height: auto!important;
+        border-top: 1px solid lighten(@grey, 10%);
+      }
+      &.subject {
+        width: 70%;
+        display: block;
+        float: left;
+      }
+      &.replies {
+        width: 15%;
+        float: left;
+      }
+      &.lastPost {
+        width: 15%;
+        float: left;
+      }
+    }
+  }
+}
+.trans-03s {
+  transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  -webkit-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  -webkit-perspective: 1000;
+  -webkit-backface-visibility: hidden;
+}
+/*
 /////////////////////////////////////////////////////// Tables /////////////////////////////////////////////////////////
 */
 table {
@@ -595,7 +714,7 @@ table {
     }
 }
 .table-striped tbody > tr:nth-child(odd) > td {
-    .altBackgroundColor(@siteStyle) !important;
+    .altBackgroundColor(@siteStyle);
 }
 .table-hover tbody tr:hover td,
 .table-hover tbody tr:hover th {
@@ -1213,7 +1332,6 @@ td {
     padding: 1px 3px 2px;
     font-size: 9.75px;
     color: #ffffff;
-    background-color: @darkPrimary;
     .text-shadow(~"-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000");
 }
 .label-important {

@@ -10,8 +10,8 @@ class Core_Forum_BoardController extends BaseController {
         $openIssues         = Forum_Post_Status::where('forum_support_status_id', '=', Forum_Support_Status::TYPE_OPEN)->count();
         $inProgressIssues   = Forum_Post_Status::where('forum_support_status_id', '=', Forum_Support_Status::TYPE_IN_PROGRESS)->count();
         $resolvedIssues     = Forum_Post_Status::where('forum_support_status_id', '=', Forum_Support_Status::TYPE_RESOLVED)->count();
-        $announcements      = Forum_Post::with('author')->where('forum_board_id', '=', $board->id)->where('forum_post_type_id', '=', 5)->orderBy('modified_at', 'desc')->get();
-        $posts              = Forum_Post::with('author')->where('forum_board_id', '=', $board->id)->whereNotIn('forum_post_type_id', array(5))->orderBy('modified_at', 'desc')->paginate(30);
+        $announcements      = Forum_Post::with('author')->where('forum_board_id', $board->id)->where('forum_post_type_id', Forum_Post::TYPE_ANNOUNCEMENT)->orderBy('modified_at', 'desc')->get();
+        $posts              = Forum_Post::with('author')->where('forum_board_id', $board->id)->where('forum_post_type_id', '!=', Forum_Post::TYPE_ANNOUNCEMENT)->orderBy('modified_at', 'desc')->paginate(30);
 
         // Add quick links
         if ($this->hasPermission('FORUM_POST')) {
@@ -27,8 +27,8 @@ class Core_Forum_BoardController extends BaseController {
         $this->setViewData('resolvedIssues', $resolvedIssues);
     }
 
-	public function getAdd($categorySlug = null)
-	{
+    public function getAdd($categorySlug = null)
+    {
         // Make sure they can access this whole area
         $this->checkPermission('FORUM_ADMIN');
 
@@ -79,5 +79,5 @@ class Core_Forum_BoardController extends BaseController {
 
             return $this->redirect(null, $board->name.' has been submitted.');
         }
-	}
+    }
 }

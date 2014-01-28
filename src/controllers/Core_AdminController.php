@@ -44,6 +44,7 @@ class Core_AdminController extends BaseController {
                 ->addTab('Message',         'message')
                 ->addTab('Forum Category',  'forum-category')
                 ->addTab('Forum Board',     'forum-board')
+                ->addTab('Forum Post',      'forum-post')
                 ->addTab('Forum Reply',     'forum-reply')
                 ->buildPanel()
             ->setCollapsable(true)
