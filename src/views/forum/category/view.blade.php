@@ -6,7 +6,7 @@
 		{{ $category->name }}
 		<div class="panel-btn">
 			<div class="panel-btn-divider"></div>
-			{{ HTML::linkIcon('forum/category/view/'. $category->uniqueId, 'fa fa-share-square-o', null, array('style' => 'color: #000;')) }}
+			{{ HTML::linkIcon('forum/category/view/'. $category->id, 'fa fa-share-square-o', null, array('style' => 'color: #000;')) }}
 			@if ($category->type->keyName == 'technical-support')
 				<div class="panel-btn-divider"></div>
 				<a href="javascript: void(0);"><i class="fa fa-cogs"></i></a>
