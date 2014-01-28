@@ -7,6 +7,7 @@
 					{{ bForm::text('keyword', Input::get('keyword'), array('placeholder' => 'Search Term'), 'Search Term') }}
 					{{ bForm::select('type', $typesArray, Input::get('type'), array(), 'Post Type') }}
 					{{ bForm::select('user', $users, Input::get('user'), array(), 'User') }}
+					{{ bForm::select('status', $statuses, Input::get('status'), array(), 'Status') }}
 					{{ bForm::submit('Search') }}
 				{{ bForm::close() }}
 			</div>

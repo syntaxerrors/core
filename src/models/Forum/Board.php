@@ -167,16 +167,6 @@ class Forum_Board extends Forum
 	}
 
     /**
-     * Get child boards
-     *
-     * @return int
-     */
-	public function getChildrenAttribute()
-	{
-		return $this->children()->get();
-	}
-
-    /**
      * Get child board links and format them as needed
      *
      * @return int
@@ -197,9 +187,9 @@ class Forum_Board extends Forum
 				});
 
 				if (count($posts) > 0) {
-					$links[] = '<b>' . HTML::linkIcon('forum/board/view/'. $child->id, 'fa fa-asterisk', $child->name) . '</b>';
+					$links[] = '<strong>' . HTML::link('forum/board/view/'. $child->id, $child->name) . '</strong>';
 				} else {
-					$links[] = HTML::link('forum/board/view/'. $child->id, $child->name, array('style' => 'font-weight: normal;'));
+					$links[] = HTML::link('forum/board/view/'. $child->id, $child->name, array('style' => 'font-weight: normal;', 'class' => 'text-disabled'));
 				}
 			}
 			return implode(', ', $links);

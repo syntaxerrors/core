@@ -5,11 +5,11 @@ class Core_Forum_BoardController extends BaseController {
     public function getView($boardId)
     {
         // Get the information
-        $board              = Forum_Board::find($boardId);
+        $board              = Forum_Board::with('children')->find($boardId);
 
-        $openIssues         = Forum_Post_Status::where('forum_support_status_id', '=', Forum_Support_Status::TYPE_OPEN)->count();
-        $inProgressIssues   = Forum_Post_Status::where('forum_support_status_id', '=', Forum_Support_Status::TYPE_IN_PROGRESS)->count();
-        $resolvedIssues     = Forum_Post_Status::where('forum_support_status_id', '=', Forum_Support_Status::TYPE_RESOLVED)->count();
+        $openIssues         = Forum_Post_Status::where('forum_support_status_id', Forum_Support_Status::TYPE_OPEN)->count();
+        $inProgressIssues   = Forum_Post_Status::where('forum_support_status_id', Forum_Support_Status::TYPE_IN_PROGRESS)->count();
+        $resolvedIssues     = Forum_Post_Status::where('forum_support_status_id', Forum_Support_Status::TYPE_RESOLVED)->count();
         $announcements      = Forum_Post::with('author')->where('forum_board_id', $board->id)->where('forum_post_type_id', Forum_Post::TYPE_ANNOUNCEMENT)->orderBy('modified_at', 'desc')->get();
         $posts              = Forum_Post::with('author')->where('forum_board_id', $board->id)->where('forum_post_type_id', '!=', Forum_Post::TYPE_ANNOUNCEMENT)->orderBy('modified_at', 'desc')->paginate(30);
 
@@ -27,15 +27,15 @@ class Core_Forum_BoardController extends BaseController {
         $this->setViewData('resolvedIssues', $resolvedIssues);
     }
 
-    public function getAdd($categorySlug = null)
+    public function getAdd($categoryId = null)
     {
         // Make sure they can access this whole area
         $this->checkPermission('FORUM_ADMIN');
 
         // Get the information
         $category = null;
-        if ($categorySlug != null) {
-            $category   = Forum_Category::where('uniqueId', '=', $categorySlug)->first();
+        if ($categoryId != null) {
+            $category   = Forum_Category::find($categoryId);
         }
         $boards      = $this->arrayToSelect(Forum_Board::orderBy('name', 'asc')->get(), 'id', 'name', 'Select a parent board');
         $categories = $this->arrayToSelect(Forum_Category::orderBy('position', 'asc')->get(), 'id', 'name', 'Select Category');

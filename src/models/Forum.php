@@ -74,11 +74,11 @@ class Forum extends \BaseModel
 	{
 		// Get all non-support categories
 		return Forum_Category::with('boards.posts')
-			->where('forum_category_type_id', '=', Forum_Category::TYPE_SUPPORT)
+			->where('forum_category_type_id', Forum_Category::TYPE_SUPPORT)
 			->get()
 			->boards
 			->posts
-			->take(5);
+			->take(3);
 	}
 
 	/**

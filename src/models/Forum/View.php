@@ -46,6 +46,10 @@ class Forum_View extends Forum
 	/********************************************************************
 	 * Scopes
 	 *******************************************************************/
+	public function scopeStatus($query, $statusId)
+	{
+			return $query->join('forum_post_status', 'forum_post_status.forum_post_id', '=', 'forum_view.uniqueId')->where('forum_post_status.forum_support_status_id', $statusId);
+	}
 
 	/********************************************************************
 	 * Model events

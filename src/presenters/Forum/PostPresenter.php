@@ -13,6 +13,19 @@ class Forum_PostPresenter extends CorePresenter {
 		} elseif ($this->resource->forum_post_type_id == \Forum_Post::TYPE_APPLICATION) {
 			$classes[] = 'application';
 		}
+
+		if ($this->resource->board->category->forum_category_type_id == \Forum_Category::TYPE_SUPPORT) {
+			if ($this->resource->status->forum_support_status_id == \Forum_Support_Status::TYPE_OPEN) {
+			$classes[] = 'open';
+			} elseif ($this->resource->status->forum_support_status_id == \Forum_Support_Status::TYPE_IN_PROGRESS) {
+				$classes[] = 'inProgress';
+			} elseif ($this->resource->status->forum_support_status_id == \Forum_Support_Status::TYPE_RESOLVED) {
+				$classes[] = 'resolved';
+			} elseif ($this->resource->status->forum_support_status_id == \Forum_Support_Status::TYPE_WONT_FIX) {
+				$classes[] = 'wontFix';
+			}
+		}
+
 		if ($this->resource->checkUserViewed(\CoreView::getActiveUser()->id)) {
 			$classes[] = 'unread';
 		}
@@ -66,7 +79,7 @@ class Forum_PostPresenter extends CorePresenter {
 		$lastUpdateType = $this->resource->lastUpdate->type->keyName;
 		$lastUpdateUser = ($this->resource->lastUpdate->morph_id == null || $lastUpdateType == 'application'
 			? $this->resource->lastUpdate->author : $this->resource->lastUpdate->morph);
-		$lastUpdateName = ($lastUpdateUser instanceof \UserPresenter ? $lastUpdateUser->username : $lastUpdateUser->name);
+		$lastUpdateName = ($lastUpdateUser instanceof \UserPresenter || $lastUpdateUser instanceof \User ? $lastUpdateUser->username : $lastUpdateUser->name);
 
 		return '<small>
 			'. $this->resource->lastUpdate->created_at .'

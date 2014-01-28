@@ -17,58 +17,80 @@
 		{{ bForm::open(false, array('url' => '/forum/search', 'type' => 'GET')) }}
 			{{ bForm::text('keyword', null, array('placeholder' => 'Search term'), 'Search') }}
 		{{ bForm::close() }}
-		<div class="well">
-			<div class="well-title">Recent Activity</div>
-			<table style="width: 100%;" class="table-hover">
-				<tbody>
-					@if (count($recentPosts) > 0)
-						@foreach ($recentPosts as $post)
-							<tr>
-								<td class="text-center" style="width: 30px;">
-									{{ $post->icon }}
-								</td>
-								<td>{{ HTML::link('forum/post/view/'. $post->id, $post->name) }}</td>
-							</tr>
-						@endforeach
-					@endif
-				</tbody>
-			</table>
+		<div class="panel panel-default">
+			<div class="panel-heading">Recent Activity</div>
+			<ul class="forum">
+				@if (count($recentPosts) > 0)
+					@foreach ($recentPosts as $post)
+						<li class="{{ $post->classes }}">
+							<div class="post">
+								<div class="subject">
+									{{ $post->link }}
+								</div>
+								<div class="clearfix"></div>
+							</div>
+						</li>
+					@endforeach
+				@endif
+			</ul>
 		</div>
-		<div class="well">
-			<div class="well-title">Technical Support</div>
-			<table style="width: 100%;" class="table-hover">
-				<caption>Issues</caption>
-				<tbody>
-					<tr class="text-info">
-						<td class="text-center"><i class="fa fa-bolt"></i></td>
-						<td><b>Open Issues</b></td>
-						<td>{{ $openIssues }}</td>
-					</tr>
-					<tr class="text-warning">
-						<td class="text-center"><i class="fa fa-clock-o"></i></td>
-						<td><b>In Progress Issues</b></td>
-						<td>{{ $inProgressIssues }}</td>
-					</tr>
-					<tr class="text-success">
-						<td class="text-center"><i class="fa fa-check-square-o"></i></td>
-						<td><b>Resolved Issues</b></td>
-						<td>{{ $resolvedIssues }}</td>
-					</tr>
-				</tbody>
-			</table>
-			<table style="width: 100%;" class="table-hover">
-				<caption>Recent Posts</caption>
-				<tbody>
-					@if (count($recentSupportPosts) > 0)
-						@foreach ($recentSupportPosts as $post)
-							<tr>
-								<td class="text-center" style="width: 30px;">{{ $post->status->icon }}</td>
-								<td>{{ HTML::link('forum/post/view/'. $post->id, $post->name) }}</td>
-							</tr>
-						@endforeach
-					@endif
-				</tbody>
-			</table>
+		<div class="panel panel-default">
+			<div class="panel-heading">Technical Support Issues</div>
+			<ul class="forum">
+				<li class="open">
+					<div class="post text-info">
+						<div class="subject">
+							<strong>Open Issues</strong>
+						</div>
+						<div class="replies"></div>
+						<div class="lastPost">
+							<strong>{{ $openIssues }}</strong>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+				</li>
+				<li class="inProgress">
+					<div class="post text-warning">
+						<div class="subject">
+							<strong>In Progress Issues</strong>
+						</div>
+						<div class="replies"></div>
+						<div class="lastPost">
+							<strong>{{ $inProgressIssues }}</strong>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+				</li>
+				<li class="resolved">
+					<div class="post text-success">
+						<div class="subject">
+							<strong>Resolved Issues</strong>
+						</div>
+						<div class="replies"></div>
+						<div class="lastPost">
+							<strong>{{ $resolvedIssues }}</strong>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">Recent Technical Support Posts</div>
+			<ul class="forum">
+				@if (count($recentSupportPosts) > 0)
+					@foreach ($recentSupportPosts as $post)
+						<li class="{{ $post->classes }}">
+							<div class="post">
+								<div class="subject">
+									{{ $post->link }}
+								</div>
+								<div class="clearfix"></div>
+							</div>
+						</li>
+					@endforeach
+				@endif
+			</ul>
 		</div>
 	</div>
 </div>

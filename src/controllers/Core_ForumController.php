@@ -46,11 +46,12 @@ class Core_ForumController extends BaseController {
 			'Forum_Reply' => 'Reply'
 		];
 
-		$users = User::orderByNameAsc()->get();
-		$users = $this->arrayToSelect($users, 'id', 'username', 'Select a user');
+		$users = User::orderByNameAsc()->get()->toSelectArray('Select a user', 'id', 'username');
+		$statuses = Forum_Support_Status::all()->toSelectArray('Select a status');
 
 		$this->setViewData('typesArray', $typesArray);
 		$this->setViewData('users', $users);
+		$this->setViewData('statuses', $statuses);
 	}
 
 	public function postSearch()
