@@ -4,6 +4,7 @@
 			<ul class="breadcrumb">
 				<li>{{ HTML::link('forum', 'Forums') }}</li>
 				<li>{{ HTML::link('forum/category/view/'. $board->category->id, $board->category->name) }}</li>
+				<li>{{ HTML::link('/forum/admin/dashboard', 'Admin') }}</li>
 				<li class="active">Edit Board</li>
 			</ul>
 		</small>

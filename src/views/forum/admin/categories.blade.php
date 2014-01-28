@@ -21,6 +21,7 @@
 							</td>
 							<td>
 								<div class="btn-group">
+									{{ HTML::link('forum/category/edit/'. $category->id, 'Edit', array('class' => 'btn btn-xs btn-primary')) }}
 									{{ HTML::link('forum/admin/delete-category/'. $category->id, 'Delete', array('class' => 'confirm-remove btn btn-xs btn-danger')) }}
 								</div>
 							</td>

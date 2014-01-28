@@ -3,6 +3,7 @@
 		<small>
 			<ul class="breadcrumb">
 				<li>{{ HTML::link('forum', 'Forums') }}</li>
+				<li>{{ HTML::link('/forum/admin/dashboard', 'Admin') }}</li>
 				<li class="active">Add Category</li>
 			</ul>
 		</small>

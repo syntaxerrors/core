@@ -2,10 +2,11 @@
 	<div class="row">
 		<small>
 			<ul class="breadcrumb">
-				<li>{{ HTML::link('forum', 'Forums') }}</li>
+				<li>{{ HTML::link('/forum', 'Forums') }}</li>
 				@if ($category != null)
 					<li>{{ HTML::link('forum/category/view/'. $category->id, $category->name) }}</li>
 				@endif
+				<li>{{ HTML::link('/forum/admin/dashboard', 'Admin') }}</li>
 				<li class="active">Add Board</li>
 			</ul>
 		</small>
