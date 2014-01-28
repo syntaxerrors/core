@@ -80,4 +80,55 @@ class Core_Forum_BoardController extends BaseController {
             return $this->redirect(null, $board->name.' has been submitted.');
         }
     }
+
+    public function getEdit($boardId)
+    {
+        // Make sure they can access this whole area
+        $this->checkPermission('FORUM_ADMIN');
+
+        $board = Forum_Board::find($boardId);
+
+        $boards      = Forum_Board::where('uniqueId', '!=', $boardId)->orderBy('name', 'asc')->get()->toSelectArray('Select a parent board');
+        $categories = $this->arrayToSelect(Forum_Category::orderBy('position', 'asc')->get(), 'id', 'name', 'Select Category');
+        $types      = $this->arrayToSelect(Forum_Board_Type::orderBy('name', 'asc')->get(), 'id', 'name', 'Select Board Type');
+
+        // Set the template
+        $this->setViewData('board', $board);
+        $this->setViewData('boards', $boards);
+        $this->setViewData('categories', $categories);
+        $this->setViewData('types', $types);
+
+    }
+
+    public function postEdit($boardId)
+    {
+        // Handle any form data
+        $input = Input::all();
+
+        if ($input != null) {
+            $board                      = Forum_Board::find($boardId);
+            $board->name                = $input['name'];
+            $board->forum_category_id   = (isset($input['forum_category_id']) && $input['forum_category_id'] != null ? $input['forum_category_id'] : null);
+            $board->forum_board_type_id = (isset($input['forum_board_type_id']) && $input['forum_board_type_id'] != 0 ? $input['forum_board_type_id'] : null);
+            $board->parent_id           = (isset($input['parent_id']) && strlen($input['parent_id']) == 10 ? $input['parent_id'] : null);
+            $board->keyName             = Str::slug($input['name']);
+            $board->description         = $input['description'];
+
+            if ($board->parent_id != null) {
+                $parent = Forum_Board::find($board->parent_id);
+                $childrenCount = $parent->children->count();
+
+                $board->position = $childrenCount + 1;
+            } else {
+                $category = Forum_Category::find($board->forum_category_id);
+                $boardCount = $category->boards->count();
+
+                $board->position = $boardCount + 1;
+            }
+
+            $this->checkErrorsSave($board);
+
+            return $this->redirect(null, $board->name.' has been updated.');
+        }
+    }
 }

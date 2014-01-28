@@ -26,6 +26,7 @@
 								</td>
 								<td>
 									<div class="btn-group">
+										{{ HTML::link('forum/board/edit/'. $board->id, 'Edit', array('class' => 'btn btn-xs btn-primary')) }}
 										{{ HTML::link('forum/admin/delete-board/'. $board->id, 'Delete', array('class' => 'confirm-remove btn btn-xs btn-danger')) }}
 									</div>
 								</td>
@@ -60,6 +61,7 @@
 										</td>
 										<td>
 											<div class="btn-group">
+												{{ HTML::link('forum/board/edit/'. $child->id, 'Edit', array('class' => 'btn btn-xs btn-primary')) }}
 												{{ HTML::link('forum/admin/delete-board/'. $child->id, 'Delete', array('class' => 'confirm-remove btn btn-xs btn-danger')) }}
 											</div>
 										</td>
