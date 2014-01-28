@@ -44,7 +44,7 @@
 						</div>
 						<div class="replies"></div>
 						<div class="lastPost">
-							<strong>{{ $openIssues }}</strong>
+							<strong>{{ HTML::link('/forum/search?status=1', $openIssues, array('class' => 'text-info')) }}</strong>
 						</div>
 						<div class="clearfix"></div>
 					</div>
@@ -56,7 +56,7 @@
 						</div>
 						<div class="replies"></div>
 						<div class="lastPost">
-							<strong>{{ $inProgressIssues }}</strong>
+							<strong>{{ HTML::link('/forum/search?status=2', $inProgressIssues, array('class' => 'text-warning')) }}</strong>
 						</div>
 						<div class="clearfix"></div>
 					</div>
@@ -68,7 +68,7 @@
 						</div>
 						<div class="replies"></div>
 						<div class="lastPost">
-							<strong>{{ $resolvedIssues }}</strong>
+							<strong>{{ HTML::link('/forum/search?status=3', $resolvedIssues, array('class' => 'text-success')) }}</strong>
 						</div>
 						<div class="clearfix"></div>
 					</div>

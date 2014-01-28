@@ -29,6 +29,14 @@
 				$('#ajaxContent').load($(this).attr('href'));
 			}
 		});
+
+		$( document ).ready(function() {
+			$('#ajaxContent').empty().html('<i class="fa fa-spinner fa-spin"></i>');
+
+			$.get('/forum/search-results', $('#searchForm').serialize(), function (data) {
+				$('#ajaxContent').empty().html(data);
+			});
+		});
 	@stop
 </script>
 @section('js')
