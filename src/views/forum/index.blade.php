@@ -19,78 +19,76 @@
 		{{ bForm::close() }}
 		<div class="panel panel-default">
 			<div class="panel-heading">Recent Activity</div>
-			<ul class="forum">
-				@if (count($recentPosts) > 0)
-					@foreach ($recentPosts as $post)
-						<li class="{{ $post->classes }}">
-							<div class="post">
-								<div class="subject">
-									{{ $post->link }}
+			<div class="list-glow">
+				<ul class="list-glow-group no-header">
+					@if (count($recentPosts) > 0)
+						@foreach ($recentPosts as $post)
+							<li class="{{ $post->classes }}">
+								<div class="list-glow-group-item list-glow-group-item-sm">
+									<div class="col-md-12">
+										{{ $post->link }}
+									</div>
 								</div>
-								<div class="clearfix"></div>
-							</div>
-						</li>
-					@endforeach
-				@endif
-			</ul>
+							</li>
+						@endforeach
+					@endif
+				</ul>
+			</div>
 		</div>
 		<div class="panel panel-default">
 			<div class="panel-heading">Technical Support Issues</div>
-			<ul class="forum">
-				<li class="open">
-					<div class="post text-info">
-						<div class="subject">
-							<strong>Open Issues</strong>
+			<div class="list-glow">
+				<ul class="list-glow-group no-header">
+					<li class="open">
+						<div class="list-glow-group-item list-glow-group-item-sm text-info">
+							<div class="col-md-6">
+								<strong>Open Issues</strong>
+							</div>
+							<div class="col-md-6">
+								<strong>{{ HTML::link('/forum/search?status=1', $openIssues, array('class' => 'text-info')) }}</strong>
+							</div>
 						</div>
-						<div class="replies"></div>
-						<div class="lastPost">
-							<strong>{{ HTML::link('/forum/search?status=1', $openIssues, array('class' => 'text-info')) }}</strong>
+					</li>
+					<li class="inProgress">
+						<div class="list-glow-group-item list-glow-group-item-sm text-warning">
+							<div class="col-md-6">
+								<strong>In Progress Issues</strong>
+							</div>
+							<div class="col-md-6">
+								<strong>{{ HTML::link('/forum/search?status=2', $inProgressIssues, array('class' => 'text-warning')) }}</strong>
+							</div>
 						</div>
-						<div class="clearfix"></div>
-					</div>
-				</li>
-				<li class="inProgress">
-					<div class="post text-warning">
-						<div class="subject">
-							<strong>In Progress Issues</strong>
+					</li>
+					<li class="resolved">
+						<div class="list-glow-group-item list-glow-group-item-sm text-success">
+							<div class="col-md-6">
+								<strong>Resolved Issues</strong>
+							</div>
+							<div class="col-md-6">
+								<strong>{{ HTML::link('/forum/search?status=3', $resolvedIssues, array('class' => 'text-success')) }}</strong>
+							</div>
 						</div>
-						<div class="replies"></div>
-						<div class="lastPost">
-							<strong>{{ HTML::link('/forum/search?status=2', $inProgressIssues, array('class' => 'text-warning')) }}</strong>
-						</div>
-						<div class="clearfix"></div>
-					</div>
-				</li>
-				<li class="resolved">
-					<div class="post text-success">
-						<div class="subject">
-							<strong>Resolved Issues</strong>
-						</div>
-						<div class="replies"></div>
-						<div class="lastPost">
-							<strong>{{ HTML::link('/forum/search?status=3', $resolvedIssues, array('class' => 'text-success')) }}</strong>
-						</div>
-						<div class="clearfix"></div>
-					</div>
-				</li>
-			</ul>
+					</li>
+				</ul>
+			</div>
 		</div>
 		<div class="panel panel-default">
 			<div class="panel-heading">Recent Technical Support Posts</div>
-			<ul class="forum">
-				@if (count($recentSupportPosts) > 0)
-					@foreach ($recentSupportPosts as $post)
-						<li class="{{ $post->classes }}">
-							<div class="post">
-								<div class="subject">
-									{{ $post->link }}
+			<div class="list-glow">
+				<ul class="list-glow-group no-header">
+					@if (count($recentSupportPosts) > 0)
+						@foreach ($recentSupportPosts as $post)
+							<li class="{{ $post->classes }}">
+								<div class="list-glow-group-item list-glow-group-item-sm">
+									<div class="col-md-12">
+										{{ $post->link }}
+									</div>
 								</div>
-								<div class="clearfix"></div>
-							</div>
-						</li>
-					@endforeach
-				@endif
-			</ul>
+							</li>
+						@endforeach
+					@endif
+				</ul>
+			</div>
 		</div>
 	</div>
 </div>

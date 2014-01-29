@@ -1,14 +1,13 @@
 <li class="{{ $board->classes }}">
-	<div class="post">
-		<div class="subject">
+	<div class="list-glow-group-item">
+		<div class="col-md-7">
 			{{ $board->link }}
 		</div>
-		<div class="replies">
+		<div class="col-md-2">
 			{{ $board->repliesBlock }}
 		</div>
-		<div class="lastPost">
+		<div class="col-md-3">
 			{{ $board->lastPostBlock }}
 		</div>
-		<div class="clearfix"></div>
 	</div>
 </li>

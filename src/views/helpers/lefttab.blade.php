@@ -8,22 +8,29 @@
 			<div class="panel panel-default">
 				@if ($settings->collapasable == false)
 					<div class="panel-heading">{{ $panel->title }}</div>
-					<ul class="list-group">
+					<div class="list-glow">
+						<ul class="list-glow-group no-header">
 				@else
 					<div class="panel-heading" onClick="collapse('{{ $panel->id }}');">{{ $panel->title }}</div>
-					<ul class="list-group" id="{{ $panel->id }}" style="{{ !Session::get('COLLAPSE_'. $panel->id) ? 'display: none;' : null }}">
+					<div class="list-glow">
+						<ul class="list-glow-group no-header" id="{{ $panel->id }}" style="{{ !Session::get('COLLAPSE_'. $panel->id) ? 'display: none;' : null }}">
 				@endif
 					@foreach ($panel->tabs as $tab)
-						<li class="list-group-item">
-							@if (isset($tab->options['badge']))
-								<span class="badge">{{ $tab->options['badge'] }}</span>
-							@endif
-							<a href="javascript: void(0);" class="ajaxLink" id="{{ $tab->id }}" data-location="{{ $tab->path }}">
-								{{ ucwords($tab->title) }}
-							</a>
+						<li id="{{ $tab->id }}_tab">
+							<div class="list-glow-group-item list-glow-group-item-sm">
+								<div class="col-md-12">
+									@if (isset($tab->options['badge']))
+										<span class="badge">{{ $tab->options['badge'] }}</span>
+									@endif
+									<a href="javascript: void(0);" class="ajaxLink block" id="{{ $tab->id }}" data-location="{{ $tab->path }}">
+										{{ ucwords($tab->title) }}
+									</a>
+								</div>
+							</div>
 						</li>
 					@endforeach
-				</ul>
+					</ul>
+				</div>
 			</div>
 		@endforeach
 	</div>
@@ -40,18 +47,18 @@
 		var parts = url.split('#');
 
 		if (parts[1] != null) {
-			$('#'+ parts[1]).parent().addClass('active');
+			$('#'+ parts[1] +'_tab').addClass('active');
 			$('#ajaxContent').html('{{ $settings->loadingIcon }}');
 			$('#ajaxContent').load($('#'+ parts[1]).attr('data-location'));
 		} else {
-			$('#{{ $settings->defaultTab }}').parent().addClass('active');
+			$('#{{ $settings->defaultTab }}_tab').addClass('active');
 			$('#ajaxContent').html('{{ $settings->loadingIcon }}');
 			$('#ajaxContent').load($('#{{ $settings->defaultTab }}').attr('data-location'));
 		}
 		$('.ajaxLink').click(function() {
 
-			$('.ajaxLink').parent().removeClass('active');
-			$(this).parent().addClass('active');
+			$('.ajaxLink_tab').removeClass('active');
+			$(this).parent().parent().parent().addClass('active');
 
 			var link = $(this).attr('id');
 			$('#ajaxContent').html('{{ $settings->loadingIcon }}');

@@ -13,15 +13,17 @@
 			@endif
 		</div>
 	</div>
-	<ul class="forum">
-		@if (count($category->boards) > 0)
-			@foreach ($category->boards as $board)
-				@if ($board->parent_id == null)
-					@include('forum.category.components.board', array('board' => $board))
-				@endif
-			@endforeach
-		@endif
-	</ul>
+	<div class="list-glow">
+		<ul class="list-glow-group no-header">
+			@if (count($category->boards) > 0)
+				@foreach ($category->boards as $board)
+					@if ($board->parent_id == null)
+						@include('forum.category.components.board', array('board' => $board))
+					@endif
+				@endforeach
+			@endif
+		</ul>
+	</div>
 </div>
 @if (!isset($main))
 	@include('forum.category.components.breadcrumbs')

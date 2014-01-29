@@ -4,11 +4,13 @@
 		@if (count($board->children) > 0)
 			<div class="panel panel-default">
 				<div class="panel-heading">Child Boards</div>
-				<ul class="forum">
-					@foreach ($board->children as $child)
-						@include('forum.category.components.board', array('board' => $child))
-					@endforeach
-				</ul>
+				<div class="list-glow">
+					<ul class="list-glow-group no-header">
+						@foreach ($board->children as $child)
+							@include('forum.category.components.board', array('board' => $child))
+						@endforeach
+					</ul>
+				</div>
 			</div>
 		@endif
 		<div class="panel panel-default">
@@ -17,24 +19,25 @@
 					{{ $posts->links() }}
 				@endif
 			</div>
-			<div class="labels">
-				<div class="subject">Subject/Author</div>
-				<div class="replies">Replies/Views</div>
-				<div class="lastPost">LastPost</div>
-				<div class="clearfix"></div>
+			<div class="list-glow">
+				<div class="list-glow-labels">
+					<div class="col-md-7">Subject/Author</div>
+					<div class="col-md-2">Replies/Views</div>
+					<div class="col-md-3">LastPost</div>
+				</div>
+				<ul class="list-glow-group">
+					@if (count($announcements) > 0)
+						@foreach ($announcements as $announcement)
+							@include('forum.board.components.post', array('post' => $announcement))
+						@endforeach
+					@endif
+					@if (count($posts) > 0)
+						@foreach ($posts as $post)
+							@include('forum.board.components.post', array('post' => $post))
+						@endforeach
+					@endif
+				</ul>
 			</div>
-			<ul class="forum">
-				@if (count($announcements) > 0)
-					@foreach ($announcements as $announcement)
-						@include('forum.board.components.post', array('post' => $announcement))
-					@endforeach
-				@endif
-				@if (count($posts) > 0)
-					@foreach ($posts as $post)
-						@include('forum.board.components.post', array('post' => $post))
-					@endforeach
-				@endif
-			</ul>
 			<div class="panel-footer text-center">
 				@if ($posts->getTotal() > 30)
 					{{ $posts->links() }}
