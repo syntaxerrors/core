@@ -57,7 +57,7 @@
 		}
 		$('.ajaxLink').click(function() {
 
-			$('.ajaxLink_tab').removeClass('active');
+			$('.ajaxLink').parent().parent().parent().removeClass('active');
 			$(this).parent().parent().parent().addClass('active');
 
 			var link = $(this).attr('id');

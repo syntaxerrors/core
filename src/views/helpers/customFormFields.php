@@ -236,7 +236,6 @@ Form::macro('bSubmit', function ($value = null, $parameters = array('class' => '
 			Form::submit($value, $parameters)
 		.'</div>'.
 	'</div>';
-
 });
 
 Form::macro('bJsonSubmit', function ($value = null, $parameters = array('class' => 'btn btn-sm btn-primary')) {
@@ -251,7 +250,6 @@ Form::macro('bJsonSubmit', function ($value = null, $parameters = array('class' 
 			Form::submit($value, $parameters)
 		.'</div>'.
 	'</div>';
-
 });
 
 Form::macro('bSubmitReset', function ($submitValue = 'Submit', $resetValue = 'Reset', $submitParameters = array('class' => 'btn btn-sm btn-primary'), $resetParameters = array('class' => 'btn btn-sm btn-inverse')) {
@@ -263,45 +261,4 @@ Form::macro('bSubmitReset', function ($submitValue = 'Submit', $resetValue = 'Re
 			.'</div>'.
 		'</div>'.
 	'</div>';
-
-});
-
-HTML::macro('row', function() {
-	return '<div class="row">';
-});
-
-HTML::macro('col', function($size, $offset = null) {
-	$class = array('col-md-'. $size);
-	if ($offset != null) {
-		$class[] = 'col-md-offset-'. $offset;
-	}
-	return '<div class="'. implode(' ', $class) .'">';
-});
-
-HTML::macro('table', function ($options = array()) {
-	$tableClass = array('table');
-
-	if (!isset($options['condensed']) || $options['condensed'] == true) {
-		$tableClass[] = 'table-condensed';
-	}
-	if (!isset($options['striped']) || $options['striped'] == true) {
-		$tableClass[] = 'table-striped';
-	}
-	if (!isset($options['hover']) || $options['hover'] == true) {
-		$tableClass[] = 'table-hover';
-	}
-	$tableClass = implode(' ', $tableClass);
-	return '<table class="'. $tableClass .'">';
-});
-
-HTML::macro('addButton', function ($url, $iconClass = 'fa-plus') {
-	return HTML::linkIcon($url, 'fa '. $iconClass);
-});
-
-HTML::macro('editButton', function ($url, $btnClass = 'primary') {
-	return HTML::link($url, 'Edit', array('class' => 'btn btn-xs btn-'. $btnClass));
-});
-
-HTML::macro('deleteButton', function ($url, $btnClass = 'danger') {
-	return HTML::link($url, 'Delete', array('class' => 'confirm-remove btn btn-xs btn-'. $btnClass));
 });

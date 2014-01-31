@@ -5,7 +5,7 @@ class Core_GithubController extends BaseController {
 	public function getIndex()
 	{
 		$issues        = array();
-		$allRepos      = Config::get('app.allRepos');
+		$allRepos      = Config::get('core::allRepos');
 
 		foreach ($allRepos as $githubUser => $repos) {
 			foreach ($repos as $repo => $displayName) {

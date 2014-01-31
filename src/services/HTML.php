@@ -34,6 +34,21 @@ class HTML extends \Illuminate\Support\Facades\HTML {
 		return '<a href="'.$url.'"'.static::attributes($attributes).'>'.$imagesrc.'</a>';
 	}
 
+	public static function addButton($url, $iconClass = 'fa-plus')
+	{
+		return HTML::linkIcon($url, 'fa '. $iconClass);
+	}
+
+	public static function editButton ($url, $btnClass = 'primary')
+	{
+		return HTML::link($url, 'Edit', array('class' => 'btn btn-xs btn-'. $btnClass));
+	}
+
+	public static function deleteButton ($url, $btnClass = 'danger')
+	{
+		return HTML::link($url, 'Delete', array('class' => 'confirm-remove btn btn-xs btn-'. $btnClass));
+	}
+
 	/**
 	 * Create a link including twitter bootstrap icons
 	 *

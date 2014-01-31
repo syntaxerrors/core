@@ -33,6 +33,11 @@ class CoreImage {
 		// Move the full image
 		$image->move($imageDirectory, $originalName);
 
+		// Delete the old image
+		if (File::exists($imageDirectory .'/'. $newImageName .'.png')) {
+			File::delete($imageDirectory .'/'. $newImageName .'.png');
+		}
+
 		// Make the image a png
 		$newImage = Image::make($imageDirectory .'/'. $originalName)
 						 ->save($imageDirectory .'/'. $newImageName .'.png');
