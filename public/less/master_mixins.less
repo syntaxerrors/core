@@ -585,9 +585,17 @@ input[type="color"]:focus,
     vertical-align: middle !important;
 }
 /*
-/////////////////////////////////////////////////////// Forums /////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////// Glow /////////////////////////////////////////////////////////
 */
-div.list-glow {
+div.list-glow-sm {
+  div.list-glow-labels:first-child {
+    margin-left: 5px !important;
+  }
+  ul.list-glow-group li div.list-glow-group-item {
+    padding: 5px 0 5px 0px !important;
+  }
+}
+div.list-glow, div.list-glow-sm {
   div.list-glow-labels {
     font-weight: bold;
     &:after, &:before {
@@ -625,6 +633,16 @@ div.list-glow {
       border: none;
       border-left: 6px solid @grey;
       vertical-align: baseline;
+      &.active {
+        div.list-glow-group-item {
+          & > div {
+            & > .badge {
+              background: saturate(lighten(@primaryColor, 15%), 40%);
+              box-shadow: 0 0 40px saturate(lighten(@primaryColor, 15%), 40%);
+            }
+          }
+        }
+      }
       .transition-duration(0.3s);
       a.block {
         display: block;
@@ -710,9 +728,17 @@ div.list-glow {
         &:after {
           clear: both;
         }
+        & > div {
+          & > .badge {
+            float:right;
+            & + .badge {
+              margin-right: 5px;
+            }
+          }
+        }
       }
       div.list-glow-group-item-sm {
-        padding: 5px 0 5px 20px;
+        padding: 5px 0 5px 0px;
       }
     }
   }

@@ -32,6 +32,11 @@ class LeftTab {
 	public $panels = null;
 
 	/**
+	 * Whether to use the list-glow view
+	 */
+	public $glow = false;
+
+	/**
 	 * When the class is constructed assign a new collection to 
 	 * the panels var.
 	 */
@@ -110,6 +115,19 @@ class LeftTab {
 	}
 
 	/**
+	 * Set the panels to use list-glow
+	 *
+	 * @param bool $glow
+	 * @return LeftTab
+	 */
+	public function setGlow($glow)
+	{
+		$this->glow = (bool) $glow;
+
+		return $this;
+	}
+
+	/**
 	 * Build the left tab helper.
 	 *
 	 * @return void
@@ -121,6 +139,10 @@ class LeftTab {
 			$this->setDefaultTab($this->panels->tabs->first()->id);
 		}
 
-		\CoreView::setRoute('helpers.lefttab')->addData('settings', $this);
+		if ($this->glow) {
+			\CoreView::setRoute('helpers.lefttabglow')->addData('settings', $this);
+		} else {
+			\CoreView::setRoute('helpers.lefttab')->addData('settings', $this);
+		}
 	}
 }
