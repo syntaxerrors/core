@@ -1,6 +1,6 @@
 {
     "name": "syntax/core",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "A core set of features for laravel sites.",
     "license": "MIT",
     "authors": [
