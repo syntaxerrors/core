@@ -60,39 +60,15 @@ class CoreBug {
 
 		$date = date('Y-m-d H:i:s');
 
-		// Check for existing record
-		$existingError = \DB::connection('exceptions')->table('site_exceptions')->where('name', $this->name)->where('message', $this->message)->where('siteKeyName', $this->site)->first();
+		$object = $this;
 
-		if (count($existingError) == 0) {
-			\DB::connection('exceptions')->table('site_exceptions')->insert(array(
-				'name'        => $this->name,
-				'message'     => $this->message,
-				'file'        => $this->file,
-				'line'        => $this->line,
-				'siteKeyName' => $this->site,
-				'userIp'      => $this->userIp,
-				'fatal'       => $this->fatal,
-				'userId'      => $this->userId,
-				'username'    => $this->username,
-				'count'       => 1,
-				'created_at'  => $date,
-				'updated_at'  => null
-			));
-		} elseif ($existingError->created_at != $date && $existingError->updated_at != $date) {
-			\DB::connection('exceptions')->table('site_exceptions')->insert(array(
-				'name'        => $this->name,
-				'message'     => $this->message,
-				'file'        => $this->file,
-				'line'        => $this->line,
-				'siteKeyName' => $this->site,
-				'userIp'      => $this->userIp,
-				'fatal'       => $this->fatal,
-				'userId'      => $this->userId,
-				'username'    => $this->username,
-				'count'       => 1,
-				'created_at'  => $date,
-				'updated_at'  => null
-			));
-		}
+		// Send the error to core
+		\Queue::push(function($job) use ($object) {
+			$response = \cURL::newRequest('post', 'http://control.stygianvault.com/siteExceptions/'. $object->site, ['post' => (array)$object])
+			->setHeader('User-Agent', 'Control')
+			->send();
+
+			$job->delete();
+		});
 	}
 }

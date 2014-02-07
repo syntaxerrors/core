@@ -407,11 +407,24 @@ h1,h2,h3,h4,h5,h6 {
 .list-group-item:hover,
 .list-group-item.active {
   background: @primaryColor;
+  h1,h2,h3,h4,h5,h6 {
+    color: #000;
+  }
 }
 .list-group-item:hover a,
 .list-group-item.active a {
   color: #000;
   text-decoration: none;
+}
+.list-group-item-danger {
+  background: @darkError;
+  color: inherit;
+  .list-group-item-heading {
+    color: #000;
+  }
+  &:hover {
+    background: @errorColor;
+  }
 }
 /*
 /////////////////////////////////////////////////////// Inputs /////////////////////////////////////////////////////////
