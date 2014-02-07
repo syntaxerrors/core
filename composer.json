@@ -21,7 +21,8 @@
         "juy/profiler" : "*",
         "intervention/image": "*",
         "knplabs/github-api": "*",
-        "mccool/laravel-auto-presenter": "*"
+        "mccool/laravel-auto-presenter": "*",
+        "anlutro/curl": "dev-master"
     },
     "autoload": {
         "classmap": [
@@ -38,7 +39,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0-dev"
+            "dev-master": "1.-dev"
         }
     }
 }
