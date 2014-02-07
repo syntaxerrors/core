@@ -16,7 +16,7 @@ class Core_BaseModel extends Ardent {
      */
     public function __construct()
     {
-        $class     = get_called_class() .'Presenter';
+        $class     = str_replace('Syntax\Core\\', '', get_called_class()) .'Presenter';
         $coreClass = 'Syntax\Core\\'. $class;
 
         if (class_exists($class)) {

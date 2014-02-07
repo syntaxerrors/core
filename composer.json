@@ -1,5 +1,6 @@
 {
     "name": "syntax/core",
+    "version": "1.0.0",
     "description": "A core set of features for laravel sites.",
     "license": "MIT",
     "authors": [
@@ -36,9 +37,4 @@
             "Syntax\\Core\\": "src/"
         }
     },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.0.x-dev"
-        }
-    }
 }
