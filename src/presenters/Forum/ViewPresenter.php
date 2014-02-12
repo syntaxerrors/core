@@ -22,7 +22,7 @@ class Forum_ViewPresenter extends CorePresenter {
 			break;
 			case 'Forum_Reply':
 				$post = Forum_Reply::find($this->resource->id)->post;
-				return HTML::link('/forum/post/view/'. $this->resource->id, $this->resource->name);
+				return HTML::link('/forum/post/view/'. $post->id .'#reply:'. $this->resource->id, $this->resource->name);
 			break;
 		}
 	}
