@@ -1,6 +1,5 @@
 <?php
 namespace Syntax\Core;
-use HTML;
 use SocketIOClient;
 use BBCode;
 use Config;

@@ -85,8 +85,9 @@ class Core_ChatController extends BaseController {
 			return $this->redirect('back', 'The requested chat room does not exist.');
 		}
 
-		$boards = Forum_Board::orderByNameAsc()->get();
-		$boards = $this->arrayToSelect($boards, 'id', 'name', 'Select a board');
+		$boards = Forum_Category::where('forum_category_type_id', '!=', Forum_Category::TYPE_SUPPORT)
+				->orderByNameAsc()->get()
+				->boards->toSelectArray('Select a Board');
 
 		// Get the data
 		$chatRoom = Chat_Room::with('chats')->find($chatRoomId);
