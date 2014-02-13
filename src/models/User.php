@@ -258,14 +258,35 @@ class User extends \BaseModel implements UserInterface, RemindableInterface
 	 * @param $keyName The keyname of the action you are checking
 	 * @return bool
 	 */
-	public function checkPermission($actions)
+	public function checkPermission($actions, $matchAll = false)
 	{
 		if (Auth::user()->roles->contains(\BaseModel::ROLE_DEVELOPER)) {
 			return true;
 		}
 
-		// If the user has the permission or is a developer return true.
-		return in_array($actions, $this->actions->keyName->toArray() );
+		if (!is_array($actions)) {
+			$actions = array($actions);
+		}
+
+		$matchedActions = 0;
+
+		if ($this->actions && $this->actions->count() > 0) {
+			$userActions = $this->actions->keyName->toArray();
+
+			foreach ($actions as $action) {
+				if (in_array($action, $userActions)) {
+					if (!$matchAll) {
+						return true;
+					}
+
+					$matchedActions++;
+				}
+			}
+
+			if ($matchedActions) {
+				if (count($actions) == $matchedActions) return true;
+			}
+		}
 
 		return false;
 	}
