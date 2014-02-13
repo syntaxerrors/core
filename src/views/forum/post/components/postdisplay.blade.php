@@ -10,7 +10,7 @@
 						<div class="well-btn well-btn-right">
 							<a href="#replyField" onClick="$('#collapseReply').addClass('in');">Reply</a>&nbsp;|&nbsp;
 							<a href="#replyField" onClick="addQuote(this);" data-quote-id="{{ $post->id }}" data-quote-name="{{ $post->name }}" data-quote-type="{{ str_replace('Core\\', '', get_class($post)) }}">Quote</a>
-							@if ($post->forumType == 'post' && Config::get('app.forumNews'))
+							@if ($post->forumType == 'post' && Config::get('core::forumNews'))
 								@if ($activeUser->checkPermission('PROMOTE_FRONT_PAGE'))
 									@if ($post->frontPageFlag == 0)
 										&nbsp;|&nbsp;<a href="/forum/post/modify/{{ $post->id }}/frontPageFlag/1">Promote</a>

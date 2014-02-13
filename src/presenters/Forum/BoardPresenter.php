@@ -47,7 +47,7 @@ class Forum_BoardPresenter extends CorePresenter {
 				<br />
 				in '. \HTML::link('forum/post/view/'. $this->resource->lastPost->id .'#reply:'. $this->resource->lastUpdate->id, $this->resource->lastUpdate->name) .'
 				<br />
-				on '. $this->resource->lastUpdate->created_at .'
+				on '. $this->resource->lastUpdate->created_at->format('F jS, Y \a\t h:ia') .'
 			</small>';
 		} else {
 			return '<small>

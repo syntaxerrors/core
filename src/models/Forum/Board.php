@@ -102,26 +102,26 @@ class Forum_Board extends Forum
 	public function getLastPostAttribute()
 	{
 		$posts         = $this->posts()->get();
-		$childrenPosts = $this->children()->get()->posts;
+		$childrenPosts = $this->children->posts;
 
-		$allPosts = null;
-		if ($posts->count() > 0) {
-			$allPosts = $posts;
-		}
-		if ($childrenPosts->count() > 0) {
-			if (isset($allPosts)) {
-				$allPosts->merge($childrenPosts);
+		$newestPost = $posts->sortBy(function ($post) {
+			return $post->modified_at;
+		})->reverse()->first();
+
+		$newestChildPost = $childrenPosts->sortBy(function ($post) {
+			return $post->modified_at;
+		})->reverse()->first();
+
+		if ($newestPost != null && $newestChildPost == null) {
+			return $newestPost;
+		} elseif ($newestChildPost != null && $newestPost == null) {
+			return $newestChildPost;
+		} elseif ($newestChildPost != null && $newestPost != null) {
+			if ($newestPost->modified_at > $newestChildPost->modified_at) {
+				return $newestPost;
 			} else {
-				$allPosts = $childrenPosts;
+				return $newestChildPost;
 			}
-		}
-
-		if ($allPosts != null) {
-			$allPosts = $allPosts->sortBy(function ($post) {
-				return $post->modified_at;
-			})->reverse();
-
-			return $allPosts[0];
 		}
 
 		return false;

@@ -26,7 +26,7 @@ class Forum_PostPresenter extends CorePresenter {
 			}
 		}
 
-		if ($this->resource->checkUserViewed(\CoreView::getActiveUser()->id)) {
+		if (!$this->resource->checkUserViewed(\CoreView::getActiveUser()->id)) {
 			$classes[] = 'unread';
 		}
 
@@ -35,7 +35,7 @@ class Forum_PostPresenter extends CorePresenter {
 
 	public function link()
 	{
-		if ($this->resource->checkUserViewed(\CoreView::getActiveUser()->id)) {
+		if (!$this->resource->checkUserViewed(\CoreView::getActiveUser()->id)) {
 			return '<strong>'. \HTML::link('/forum/post/view/'. $this->resource->id, $this->resource->name) .'</strong>';
 		}
 

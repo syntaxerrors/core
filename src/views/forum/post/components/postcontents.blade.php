@@ -7,7 +7,7 @@
 								<div class="pull-right text-bottom text-right">
 									<small>
 										@if ($post->frontPageFlag == 1)
-											<small class="label pull-right">Front Page Post</small>
+											<small class="label label-primary pull-right">Front Page Post</small>
 											<div class="clearfix"></div>
 										@endif
 										@if ($post->adminReviewFlag == 1 || $post->moderatorLockedFlag == 1)

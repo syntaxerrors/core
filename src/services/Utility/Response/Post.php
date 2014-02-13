@@ -245,9 +245,9 @@ class Post {
 		if ($this->errorCount() > 0) {
 			if ($path == 'back') {
 				$back = $this->redirectBack();
-				return $back->with('errors', $this->getErrors())->withInput()->send();
+				return $back->with('errors', $this->getErrors())->send();
 			} else {
-				return Redirect::to(Request::path())->with('errors', $this->getErrors())->withInput()->send();
+				return Redirect::to(Request::path())->with('errors', $this->getErrors())->send();
 			}
 		} else {
 			if ($this->successMessage == null) {
@@ -259,9 +259,9 @@ class Post {
 			} else {
 				if ($this->successPath == 'back') {
 					$back = $this->redirectBack();
-					return $back->with('message', $this->successMessage)->withInput()->send();
+					return $back->with('message', $this->successMessage)->send();
 				}
-				return Redirect::to($this->successPath)->with('message', $this->successMessage)->withInput()->send();
+				return Redirect::to($this->successPath)->with('message', $this->successMessage)->send();
 			}
 		}
 	}
