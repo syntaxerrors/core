@@ -67,15 +67,12 @@ class ForumPost {
 	public function setDefaultData()
 	{
 		if ($this->type == 'IMAGE') {
-			$replyTypes= \Forum_Reply_Type::where('keyName', 'IMAGE')->get();
-			$this->replyTypes = \CoreView::arrayToSelect($replyTypes , 'id', 'name', false);
+			$this->replyTypes= \Forum_Reply_Type::where('keyName', 'IMAGE')->get()->toSelectArray(false);
 		} else {
-			$replyTypes       = \Forum_Reply_Type::orderByNameAsc()->remember(60)->get();
-			$this->replyTypes = \CoreView::arrayToSelect($replyTypes , 'id', 'name', 'Select Reply Type');
+			$this->replyTypes       = \Forum_Reply_Type::orderByNameAsc()->get()->toSelectArray('Select a Reply Type');
 		}
 
-		$statuses       = \Forum_Support_Status::remember(60)->get();
-		$this->statuses = \CoreView::arrayToSelect($statuses, 'id', 'name', 'Select a Status');
+		$this->statuses       = \Forum_Support_Status::all()->toSelectArray('Select a status');
 
 		return $this;
 	}

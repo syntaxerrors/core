@@ -1,6 +1,10 @@
 								<!-- Start Title and Details -->
 								{{ $post->icon }}
-								<strong>{{ HTML::link('forum/post/view/'. $post->keyName .'#reply:'. $post->id, $post->name, array('name' => 'reply:'. $post->id, 'rel' => 'nofollow')) }}</strong>
+								@if (getRootClass($post) == 'Forum_Post')
+									<strong>{{ HTML::link('forum/post/view/'. $post->id .'/'. $details->currentPage, $post->name, array('name' => 'reply:'. $post->id, 'rel' => 'nofollow')) }}</strong>
+								@else
+									<strong>{{ HTML::link('forum/post/view/'. $post->post->id .'/'. $details->currentPage .'#reply:'. $post->id, $post->name, array('name' => 'reply:'. $post->id, 'rel' => 'nofollow')) }}</strong>
+								@endif
 								@if ($post->forum_post_type_id == Forum_Post::TYPE_APPLICATION && $post->approvedFlag == 0)
 									<small class="label label-important">Unapproved</small>
 								@endif

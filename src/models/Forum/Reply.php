@@ -62,7 +62,7 @@ class Forum_Reply extends Forum
 		'roll'        => array('hasOne',	'Forum_Reply_Roll',		'foreignKey' => 'forum_reply_id'),
 		'history'     => array('hasMany',	'Forum_Reply_Edit',		'foreignKey' => 'forum_reply_id', 'orderBy' => array('created_at', 'desc')),
 		'moderations' => array('morphMany',	'Forum_Moderation',		'name'       => 'resource'),
-		'morph'       => array('morphTo', 'withTrashed'),
+		'morph'       => array('morphTo'),
 		'quote'       => array('morphTo'),
 	);
 

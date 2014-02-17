@@ -63,7 +63,7 @@ class Forum_Post extends Forum
 		'history'     => array('hasMany',	'Forum_Post_Edit',		'foreignKey' => 'forum_post_id', 'orderBy' => array('created_at', 'desc')),
 		'status'      => array('hasOne',	'Forum_Post_Status',	'foreignKey' => 'forum_post_id'),
 		'moderations' => array('morphMany',	'Forum_Moderation',		'name'       => 'resource'),
-		'morph'       => array('morphTo', 'withTrashed'),
+		'morph'       => array('morphTo'),
 	);
 
 	/********************************************************************
