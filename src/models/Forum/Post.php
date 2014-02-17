@@ -63,7 +63,7 @@ class Forum_Post extends Forum
 		'history'     => array('hasMany',	'Forum_Post_Edit',		'foreignKey' => 'forum_post_id', 'orderBy' => array('created_at', 'desc')),
 		'status'      => array('hasOne',	'Forum_Post_Status',	'foreignKey' => 'forum_post_id'),
 		'moderations' => array('morphMany',	'Forum_Moderation',		'name'       => 'resource'),
-		'morph'       => array('morphTo'),
+		'morph'       => array('morphTo', 'withTrashed'),
 	);
 
 	/********************************************************************
@@ -207,10 +207,6 @@ class Forum_Post extends Forum
 		$status->forum_support_status_id = $statusId;
 
 		$status->save();
-
-		if (count($status->getErrors()->all()) > 0) {
-			ppd($status->getErrors()->all());
-		}
 	}
 
 }
