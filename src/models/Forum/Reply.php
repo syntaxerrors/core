@@ -1,6 +1,8 @@
 <?php
 namespace Syntax\Core;
 
+use Auth;
+
 class Forum_Reply extends Forum
 {
 	/********************************************************************
