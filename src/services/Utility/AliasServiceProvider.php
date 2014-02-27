@@ -15,7 +15,6 @@ class AliasServiceProvider extends ServiceProvider {
 			'HTML'                        => 'Syntax\Core\HTML',
 			'View'                        => 'Syntax\Core\View\ViewFacade',
 			'ForumPost'                   => 'Syntax\Core\Forum\Facades\ForumPost',
-			'Menu'                        => 'Syntax\Core\Utility\Facades\Menu',
 			'Mobile'                      => 'Syntax\Core\Utility\Facades\Mobile',
 			'CoreView'                    => 'Syntax\Core\Utility\Facades\CoreView',
 			'CoreImage'                   => 'Syntax\Core\Utility\Facades\CoreImage',

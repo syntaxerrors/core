@@ -36,10 +36,6 @@ Version: 1.0
 	float: left;
 }
 
-#utopian-navigation li:last-of-type {
-	float: right;
-}
-
 #utopian-navigation li ul {
 	background: #666666;
 	background: -moz-radial-gradient(80% 0% 0deg, circle cover, #787878, #666666, #666666 90%);

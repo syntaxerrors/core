@@ -14,8 +14,6 @@ class UtilityServiceProvider extends ServiceProvider {
 		// Main utilities
 		$this->registerMobile();
 
-		$this->registerMenu();
-
 		$this->registerImage();
 
 		// View utilities
@@ -49,19 +47,6 @@ class UtilityServiceProvider extends ServiceProvider {
 		$this->app->bindShared('mobile', function($app)
 		{
 			return new Mobile();
-		});
-	}
-
-	/**
-	 * Register the Menu instance.
-	 *
-	 * @return void
-	 */
-	protected function registerMenu()
-	{
-		$this->app->bindShared('menu', function($app)
-		{
-			return new Menu();
 		});
 	}
 

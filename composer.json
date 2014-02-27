@@ -22,7 +22,8 @@
         "intervention/image": "*",
         "knplabs/github-api": "*",
         "mccool/laravel-auto-presenter": "*",
-        "anlutro/curl": "dev-master"
+        "anlutro/curl": "dev-master",
+        "vespakoen/menu": "dev-master"
     },
     "autoload": {
         "classmap": [

@@ -38,7 +38,7 @@ class Core_BaseController extends Controller {
 
 		// Set up the menu
 		$this->getMenu();
-		CoreView::setMenu(Menu::get());
+		$this->setMenu();
 	}
 
 	public function setGithubClient()
@@ -54,6 +54,58 @@ class Core_BaseController extends Controller {
 		}
 
 		$this->github = $github;
+	}
+
+	public function setMenu()
+	{
+		// Handle the different menus
+		$siteMenu = isset($this->activeUser) ? $this->activeUser->getPreferenceValueByKeyName('SITE_MENU') : Config::get('core::menu');
+
+		if (CoreView::get()->mobile == true || $siteMenu == 'twitter') {
+			// Set the menu to twitter's style
+			Menu::handler('main')->addClass('nav navbar-nav');
+			Menu::handler('mainRight')->addClass('nav navbar-nav navbar-right');
+
+			// Handle children
+			Menu::handler('main')->getItemsByContentType('Menu\Items\Contents\Link')
+				->map(function($item) {
+					if ($item->hasChildren()) {
+						$item->getContent()->addClass('dropdown-toggle')->dataToggle('dropdown');
+						$item->getContent()->value($item->getContent()->getValue() .' <b class="caret"></b>');
+						$item->getChildren()->addClass('dropdown-menu');
+					}
+				});
+			Menu::handler('mainRight')->getItemsByContentType('Menu\Items\Contents\Link')
+				->map(function($item) {
+					if ($item->hasChildren()) {
+						$item->getContent()->addClass('dropdown-toggle')->dataToggle('dropdown');
+						$item->getContent()->value($item->getContent()->getValue() .' <b class="caret"></b>');
+						$item->getChildren()->addClass('dropdown-menu');
+					}
+				});
+
+			CoreView::setMenu('twitter');
+		} elseif ($siteMenu == 'utopian') {
+			// Set the menu to utopian's style
+			Menu::handler('main')->id('utopian-navigation')->addClass('black utopian');
+			Menu::handler('mainRight')->id('utopian-navigation')->addClass('black utopian');
+
+			// Handle children
+			Menu::handler('main')->getItemsByContentType('Menu\Items\Contents\Link')
+				->map(function($item) {
+					if ($item->hasChildren()) {
+						$item->addClass('dropdown');
+					}
+				});
+			Menu::handler('mainRight')->getItemsByContentType('Menu\Items\Contents\Link')
+				->map(function($item) {
+					if ($item->hasChildren()) {
+						$item->addClass('dropdown');
+					}
+				});
+
+			CoreView::setMenu('utopian');
+		}
 	}
 
 	/********************************************************************

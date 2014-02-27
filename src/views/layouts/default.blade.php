@@ -31,9 +31,9 @@
 <body class="app">
 	<div id="container">
 		<div id="header">
-			@if ($mobile == false)
-				@include('layouts.menu.'. (isset($activeUser) ? $activeUser->getPreferenceValueByKeyName('SITE_MENU') : Config::get('core::menu')) )
-			@else
+			@if ($menu == 'utopian')
+				@include('layouts.menu.utopian')
+			@elseif ($menu == 'twitter')
 				@include('layouts.menu.twitter')
 			@endif
 		</div>
