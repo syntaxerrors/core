@@ -17,8 +17,19 @@ class Environment extends BaseEnvironment {
     public function make($view, $data = array(), $mergeData = array())
     {
         if (!$this->exists($view)) {
-            $view = 'core::'. $view;
+            $coreView  = 'core::'. $view;
+            $chatView  = 'chat::'. $view;
+            $forumView = 'forum::'. $view;
+
+            if ($this->exists($coreView)) {
+                $view = $coreView;
+            } elseif ($this->exists($chatView)) {
+                $view = $chatView;
+            } elseif ($this->exists($forumView)) {
+                $view = $forumView;
+            }
         }
+
         $path = $this->finder->find($view);
 
         $data = array_merge($mergeData, $this->parseData($data));

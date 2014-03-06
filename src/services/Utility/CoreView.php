@@ -114,8 +114,7 @@ class CoreView {
 
 	public function checkView($view)
 	{
-		// ppd($view);
-		if (View::exists($view) || View::exists('core::'. $view)) {
+		if (View::exists($view) || View::exists('core::'. $view) || View::exists('chat::'. $view) || View::exists('forum::'. $view)) {
 			return true;
 		}
 
