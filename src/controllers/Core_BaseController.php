@@ -9,6 +9,8 @@ class Core_BaseController extends Controller {
 
 	protected $github;
 
+	protected $pageTitle;
+
 	/**
 	 * Create a new Controller instance.
 	 * Assigns the active user
@@ -258,11 +260,10 @@ class Core_BaseController extends Controller {
 		return CoreView::arrayToSelect($array, $key, $value, $first);
 	}
 
-	public function getArray($class, $message)
+	public function getSelectArray($class, $message = null)
 	{
-		$objects     = $class::orderByNameAsc()->get();
-		$objectArray = $this->arrayToSelect($objects, 'id', 'name', $message);
+		$objects = $class::orderByNameAsc()->get()->toSelectArray($message);
 
-		return $objectArray;
+		return $objects;
 	}
 }

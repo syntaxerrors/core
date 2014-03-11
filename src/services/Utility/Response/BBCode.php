@@ -44,22 +44,22 @@ class BBCode {
 			$data = preg_replace_callback("/\n\r?/", function($match) { return ''; }, $match[1]);
 			return '<th>'. $data .'</th>';
 		};
+		// Replace [th=CLASS]...[/th] with <th class="CLASS">...</th>
+		$matches["/\[th=(.*?)\](.*?)\[\/th\]/is"] = function($match) {
+			return '<th class="'. $match[1] .'">'. $match[2] .'</th>';
+		};
 		// Replace [td]...[/td] with <td>...</td>
 		$matches["/\[td\](.*?)\[\/td\]/is"] = function($match) {
 			$data = preg_replace_callback("/\n\r?/", function($match) { return ''; }, $match[1]);
 			return '<td>'. $data .'</td>';
 		};
-		// Replace [th=CLASS]...[/th] with <th class="CLASS">...</th>
-		$matches["/\[th=(.*?)\](.*?)\[\/th\]/is"] = function($match) {
-			return '<th class="'. $match[1] .'">'. $match[2] .'</th>';
+		// Replace [td=CLASS]...[/td] with <td class="CLASS">...</td>
+		$matches["/\[td=(.*?)\](.*?)\[\/td\]/is"] = function($match) {
+			return '<td class="'. $match[1] .'">'. $match[2] .'</td>';
 		};
 		// Replace [spoiler=TITLE]...[/spoiler] with Bootstrap toggles
 		$matches["/\[spoiler=(.*?)\](.*?)\[\/spoiler\]/is"] = function($match) {
 			return '<div class="well well-sm"><div data-toggle="collapse" data-target="#spoiler_'. time() .'" class="text-info" onClick="$(this).children().children().toggleClass(\'fa fa-chevron-down\').toggleClass(\'fa fa-chevron-up\');"><strong>'. $match[1] .' <i class="fa fa-chevron-down pull-right"></i></strong></div><div id="spoiler_'. time() .'" class="collapse">'. $match[2] .'</div></div>';
-		};
-		// Replace [td=CLASS]...[/td] with <td class="CLASS">...</td>
-		$matches["/\[td=(.*?)\](.*?)\[\/td\]/is"] = function($match) {
-			return '<td class="'. $match[1] .'">'. $match[2] .'</td>';
 		};
 		// Replace [icon=ICON] with <i class="fa fa-ICON"></i>
 		$matches["/\[icon=(.*?)\]/is"] = function($match) {
@@ -91,7 +91,7 @@ class BBCode {
 			return '<div style="width: 100%;">'. $match[1] .'</div>';
 		};
 
-		// Replace [fullWidth]...[/fullWidth] with <div style="width: 100%;">...</div>
+		// Replace [floatRight]...[/floatRight] with <div style="float: right;">...</div>
 		$matches["/\[floatRight\](.*?)\[\/floatRight\]/is"] = function($match) {
 			return '<div style="float: right;">'. $match[1] .'</div>';
 		};

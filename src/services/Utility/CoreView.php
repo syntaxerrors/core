@@ -114,8 +114,19 @@ class CoreView {
 
 	public function checkView($view)
 	{
-		if (View::exists($view) || View::exists('core::'. $view) || View::exists('chat::'. $view) || View::exists('forum::'. $view)) {
+		if (View::exists($view) {
 			return true;
+		}
+
+		// Check the syntax views
+		$syntaxDirectories  = File::directories(base_path('vendor/syntax'));
+		foreach ($syntaxDirectories as $syntaxDirectory) {
+			$package = explode('/', $syntaxDirectory);
+			$package = end($package);
+
+			if (View::exists($package .'::'. $view)) {
+				return true;
+			}
 		}
 
 		return false;
