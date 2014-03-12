@@ -114,7 +114,7 @@ class CoreView {
 
 	public function checkView($view)
 	{
-		if (View::exists($view) {
+		if (View::exists($view)) {
 			return true;
 		}
 
