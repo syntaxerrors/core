@@ -500,21 +500,14 @@ class Core_AdminController extends BaseController {
         $usersArray = $this->arrayToSelect($users, 'id', 'username', 'Select a user');
         $rolesArray = $this->arrayToSelect($roles, 'id', 'name', 'None');
 
-        // Set up the one page crud
         Crud::setTitle('Role Users')
-                 ->setSortProperty('username')
-                 ->setPaginationFlag(true)
-                 ->setMulti($users, 'roles')
-                 ->setMultiColumns(array('Users', 'Roles'))
-                 ->setMultiDetails(array('name' => 'username', 'field' => 'user_id'))
-                 ->setMultiPropertyDetails(array('name' => 'name', 'field' => 'role_id'));
-
-        // Add the form fields
-        Crud::addFormField('user_id', 'select', $usersArray)
-                 ->addFormField('role_id', 'multiselect', $rolesArray);
-
-        // Handle the view data
-        Crud::make();
+            ->setSortProperty('username')
+            ->setPaginationFlag(true)
+            ->setUpMultiColumn()
+                ->addRootColumn('Users', $users, 'username', 'user_id', $usersArray)
+                ->addMultiColumn('Roles', 'roles', 'name', 'role_id', $rolesArray)
+                ->finish()
+            ->make();
     }
 
     public function postRoleUsers()
@@ -568,23 +561,20 @@ class Core_AdminController extends BaseController {
 
     public function getActionRoles()
     {
-        $actions = User_Permission_Action::orderByNameAsc()->get();
         $roles   = User_Permission_Role::orderByNameAsc()->get();
+        $actions = User_Permission_Action::orderByNameAsc()->get();
+
+        $rolesArray = $roles->toSelectArray('Select a role');
+        $actionsArray = $actions->toSelectArray('None');
 
         // Set up the one page crud
         Crud::setTitle('Action Roles')
-                 ->setSortProperty('name')
-                 ->setMulti($roles, 'actions')
-                 ->setMultiColumns(array('Roles', 'Actions'))
-                 ->setMultiDetails(array('name' => 'name', 'field' => 'role_id'))
-                 ->setMultiPropertyDetails(array('name' => 'name', 'field' => 'action_id'));
-
-        // Add the form fields
-        Crud::addFormField('role_id', 'select', $this->arrayToSelect($roles, 'id', 'name', 'Select a role'))
-                 ->addFormField('action_id', 'multiselect', $this->arrayToSelect($actions, 'id', 'name', 'None'));
-
-        // Handle the view data
-        Crud::make();
+            ->setSortProperty('name')
+            ->setUpMultiColumn()
+                ->addRootColumn('Roles', $roles, 'name', 'role_id', $rolesArray)
+                ->addMultiColumn('Actions', 'actions', 'name', 'action_id', $actionsArray)
+                ->finish()
+            ->make();
     }
 
     public function postActionRoles()
@@ -712,19 +702,21 @@ class Core_AdminController extends BaseController {
 
     public function getTheme()
     {
-        $masterLess = base_path() .'/vendor/syntax/core/public/less/master.less';
+        $masterLess   = public_path() .'/css/colors.less';
 
         $lines = file($masterLess);
 
+        // ppd($lines);
+
         $colors = array();
 
-        $colors['grey']    = array('title' => 'Background Color',          'hex' => substr(explode('@grey: ',            $lines[4])[1],  0, -2));
-        $colors['primary'] = array('title' => 'Primary Color',             'hex' => substr(explode('@primaryColor: ',    $lines[6])[1],  0, -2));
-        $colors['info']    = array('title' => 'Information Color',         'hex' => substr(explode('@infoColor: ',       $lines[10])[1],  0, -2));
-        $colors['success'] = array('title' => 'Success Color',             'hex' => substr(explode('@successColor: ',    $lines[13])[1], 0, -2));
-        $colors['warning'] = array('title' => 'Warning Color',             'hex' => substr(explode('@warningColor: ',    $lines[16])[1], 0, -2));
-        $colors['error']   = array('title' => 'Error Color',               'hex' => substr(explode('@errorColor: ',      $lines[19])[1], 0, -2));
-        $colors['menu']    = array('title' => 'Active Menu Link Color',    'hex' => substr(explode('@menuColor: ',       $lines[22])[1], 0, -2));
+        $colors['grey']    = array('title' => 'Background Color',          'hex' => substr(explode('@grey: ',            $lines[0])[1],  0, -2));
+        $colors['primary'] = array('title' => 'Primary Color',             'hex' => substr(explode('@primaryColor: ',    $lines[2])[1],  0, -2));
+        $colors['info']    = array('title' => 'Information Color',         'hex' => substr(explode('@infoColor: ',       $lines[6])[1],  0, -2));
+        $colors['success'] = array('title' => 'Success Color',             'hex' => substr(explode('@successColor: ',    $lines[9])[1],  0, -2));
+        $colors['warning'] = array('title' => 'Warning Color',             'hex' => substr(explode('@warningColor: ',    $lines[12])[1], 0, -2));
+        $colors['error']   = array('title' => 'Error Color',               'hex' => substr(explode('@errorColor: ',      $lines[15])[1], 0, -2));
+        $colors['menu']    = array('title' => 'Active Menu Link Color',    'hex' => substr(explode('@menuColor: ',       $lines[18])[1], 0, -2));
 
         $this->setViewData('colors', $colors);
     }
@@ -734,28 +726,26 @@ class Core_AdminController extends BaseController {
         $input = e_array(Input::all());
 
         if ($input != null) {
-            $masterLess = base_path() .'/vendor/syntax/core/public/less/master.less';
-            $masterCss  = public_path() .'/css/master.css';#5097b5
+            $masterLess   = public_path() .'/css/colors.less';
 
             $lines = file($masterLess);
 
             // Set the new colors
-            $lines[4]  = '@grey: '. $input['grey'] .";\n";
-            $lines[6]  = '@primaryColor: '. $input['primary'] .";\n";
-            $lines[10]  = '@infoColor: '. $input['info'] .";\n";
-            $lines[13] = '@successColor: '. $input['success'] .";\n";
-            $lines[16] = '@warningColor: '. $input['warning'] .";\n";
-            $lines[19] = '@errorColor: '. $input['error'] .";\n";
-            $lines[22] = '@menuColor: '. $input['menu'] .";\n";
+            $lines[0]  = '@grey: '. $input['grey'] .";\n";
+            $lines[2]  = '@primaryColor: '. $input['primary'] .";\n";
+            $lines[6]  = '@infoColor: '. $input['info'] .";\n";
+            $lines[9]  = '@successColor: '. $input['success'] .";\n";
+            $lines[12] = '@warningColor: '. $input['warning'] .";\n";
+            $lines[15] = '@errorColor: '. $input['error'] .";\n";
+            $lines[18] = '@menuColor: '. $input['menu'] .";\n";
 
             File::delete($masterLess);
-            File::delete($masterCss);
 
             File::put($masterLess, implode($lines));
 
             SSH::run(array(
                 'cd '. base_path(),
-                'lessc '. $masterLess .' '. $masterCss
+                'gulp css'
             ));
 
             Ajax::setStatus('success');

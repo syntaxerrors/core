@@ -18,36 +18,6 @@ class Crud {
 	public $sortProperty;
 
 	/**
-	 * A flag to switch between multiview and standard
-	 */
-	public $multiViewFlag = false;
-
-	/**
-	 * The column names for the multiView
-	 */
-	public $multiViewColumns = array();
-
-	/**
-	 * The name to display for each object
-	 */
-	public $multiViewDetails = array();
-
-	/**
-	 * The name to display for each property of the object
-	 */
-	public $multiViewPropertyDetails = array();
-
-	/**
-	 * The collection to use for the multiView
-	 */
-	public $multiViewCollection;
-
-	/**
-	 * The property to tap on the collection
-	 */
-	public $multiViewProperty;
-
-	/**
 	 * A flag to show the delete button
 	 */
 	public $deleteFlag = true;
@@ -73,9 +43,14 @@ class Crud {
 	public $paginationFlag = false;
 
 	/**
-	 * An array of extra buttons to display
+	 * A flag to switch between multiview and standard
 	 */
-	public $buttons;
+	public $multiViewFlag = false;
+
+	/**
+	 * Multiview object
+	 */
+	public $multiView;
 
 	/**
 	 * The fields to display on the page
@@ -89,7 +64,6 @@ class Crud {
 
 	public function __construct()
 	{
-		$this->buttons       = new \stdClass();
 		$this->displayFields = new \stdClass();
 		$this->formFields    = new \stdClass();
 	}
@@ -104,77 +78,10 @@ class Crud {
 		CoreView::setRoute('helpers.crud')->addData('settings', $this);
 	}
 
-	/**
-	 * Display multiple results as a parameter (replaces display fields)
-	 *
-	 * @param  Utility_Collection  $collection
-	 * @param  string  $column
-	 * @param  string  $property
-	 * @return Utility_Crud
-	 */
-	public function setMulti($collection, $property)
+	public function setUpMultiColumn()
 	{
-		$this->multiViewFlag       = true;
-		$this->deleteFlag          = false;
-		$this->multiViewCollection = $collection;
-		$this->multiViewProperty   = $property;
-
-		return $this;
-	}
-
-	/**
-	 * Set the column names for the display
-	 *
-	 * @param  array  $columns
-	 * @return Utility_Crud
-	 */
-	public function setMultiColumns($columns)
-	{
-		$this->multiViewColumns = $columns;
-
-		return $this;
-	}
-
-	/**
-	 * Set the property to tap on the collection for it's name and the field this pertains to
-	 *
-	 * @param  array  $details
-	 * @return Utility_Crud
-	 */
-	public function setMultiDetails($details)
-	{
-		$this->multiViewDetails = $details;
-
-		return $this;
-	}
-
-	/**
-	 * Set the property to tap on the collection's property for it's name and the field this pertains to
-	 *
-	 * @param  array  $details
-	 * @return Utility_Crud
-	 */
-	public function setMultiPropertyDetails($details)
-	{
-		$this->multiViewPropertyDetails = $details;
-
-		return $this;
-	}
-
-	/**
-	 * Ad an extra button per row
-	 *
-	 * @param  string  $name
-	 * @param  string  $linkLocation
-	 * @param  string  $linkName
-	 * @param  array   $options
-	 * @return Utility_Crud
-	 */
-	public function addButton($name, $linkLocation, $linkName, $options = array())
-	{
-		$this->buttons->{$name} = HTML::link($linkLocation, $linkName, $options);
-
-		return $this;
+		$this->multiViewFlag = true;
+		return new Crud\Crud_MultiView($this);
 	}
 
 	/**

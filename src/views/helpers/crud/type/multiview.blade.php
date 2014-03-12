@@ -8,25 +8,21 @@
 				<thead>
 					<tr>
 						<th style="display: none;"></th>
-						<?php
-							$width = (90 / count($settings->multiViewColumns)) .'%';
-						?>
-						@foreach ($settings->multiViewColumns as $column)
-							<th class="text-left" style="width: {{ $width }}">{{ ucwords(str_replace('_', ' ', $column)) }}</th>
-						@endforeach
+						<th class="text-left" style="width: 45%">{{ $settings->multiView->rootColumn->title }}</th>
+						<th class="text-left" style="width: 45%">{{ $settings->multiView->multiColumn->title }}</th>
 						<th class="text-center" style="width: 10%;">Actions</th>
 					</tr>
 				</thead>
 				<tbody>
-					@foreach ($settings->multiViewCollection as $collection)
+					@foreach ($settings->multiView->rootColumn->collection as $collection)
 						<tr>
 							<td style="display: none;">
-								<input type="hidden"	id="{{ $collection->id }}" data-multi="{{{ json_encode($collection->{$settings->multiViewProperty}->id->toArray()) }}}" />
+								<input type="hidden" id="{{ $collection->id }}" data-multi="{{{ json_encode($collection->{$settings->multiView->multiColumn->property}->id->toArray()) }}}" />
 							</td>
-							<td>{{ $collection->{$settings->multiViewDetails['name']} }}</td>
+							<td>{{ $collection->{$settings->multiView->rootColumn->name} }}</td>
 							<td>
-								@foreach ($collection->{$settings->multiViewProperty} as $property)
-									{{ $property->{$settings->multiViewPropertyDetails['name']} }}<br />
+								@foreach ($collection->{$settings->multiView->multiColumn->property} as $property)
+									{{ $property->{$settings->multiView->multiColumn->name} }}<br />
 								@endforeach
 							</td>
 							<td class="text-center">
@@ -47,7 +43,7 @@
 			</table>
 			@if($settings->paginationFlag == true)
 				<div class="text-center">
-					{{ $settings->multiViewCollection->links() }}
+					{{ $settings->multiView->rootColumn->collection->links() }}
 				</div>
 			@endif
 		</div>
@@ -123,9 +119,9 @@
 			var object = $('#'+ objectId);
 			$('#id').val(objectId);
 
-			$('#input_'+ settings.multiViewDetails.field).val(objectId);
+			$('#input_'+ settings.multiView.rootColumn.field).val(objectId);
 			var multi = $.parseJSON(object.attr('data-multi'));
-			$('#input_'+ settings.multiViewPropertyDetails.field).val(multi);
+			$('#input_'+ settings.multiView.multiColumn.field).val(multi);
 
 			$('#listPanel').removeClass('col-md-12').addClass('col-md-8');
 			$('.col-md-4').show();

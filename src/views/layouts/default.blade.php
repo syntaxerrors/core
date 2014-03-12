@@ -8,10 +8,8 @@
 
 	<!-- Extra styles -->
 	{{ HTML::style('/vendor/font-awesome/css/font-awesome.min.css') }}
-	{{ HTML::style('/vendor/bootstrap-colorpicker/css/bootstrap-colorpicker.css') }}
 	{{ HTML::style('/vendor/messenger/build/css/messenger.css') }}
 	{{ HTML::style('/vendor/messenger/build/css/messenger-theme-future.css') }}
-	{{ HTML::style('http://fonts.googleapis.com/css?family=Orbitron') }}
 
 	<!-- Local styles -->
 	@if (isset($activeUser) && File::exists($activeUser->theme))
@@ -68,12 +66,7 @@
 	</div>
 
 	<!-- javascript-->
-	{{ HTML::script('/js/jquery-1.10.2.min.js') }}
-	{{ HTML::script('/vendor/bootstrap3/dist/js/bootstrap.min.js') }}
-	{{ HTML::script('/vendor/bootbox/bootbox.js') }}
-	{{ HTML::script('/vendor/messenger/build/js/messenger.min.js') }}
-	{{ HTML::script('/vendor/messenger/build/js/messenger-theme-future.js') }}
-	{{ HTML::script('/js/master.js') }}
+	{{ HTML::script('/js/all.js') }}
 
 	<!-- JS Include -->
 	@section('jsInclude')
