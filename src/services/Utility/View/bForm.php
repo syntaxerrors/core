@@ -266,6 +266,7 @@ class bForm {
 		static $exists = false;
 
 		if (!$exists) {
+			$this->addToSection('css', HTML::style('vendor/bootstrap-colorpicker/css/bootstrap-colorpicker.css'));
 			$this->addToSection('jsInclude', HTML::script('vendor/bootstrap-colorpicker/js/bootstrap-colorpicker.js'));
 			$this->addToSection('onReadyJs', '
 $(\'.colorpicker\').colorpicker().on(\'changeColor\', function(ev){
