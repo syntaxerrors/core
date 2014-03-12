@@ -178,25 +178,25 @@ class Core_UserController extends BaseController {
 
     public function getChangeTheme()
     {
-        $lessTemplate = base_path() .'/vendor/syntax/core/public/less/template.less';
-        $userLess     = public_path() .'/css/users/'. Str::studly($this->activeUser->username) .'_css.less';
+        $masterLess = public_path() .'/css/colors.less';
+        $userLess   = public_path() .'/css/users/'. Str::studly($this->activeUser->username) .'.less';
 
         // Make a copy of the less file
         if (!File::exists($userLess)) {
-            File::copy($lessTemplate, $userLess);
+            File::copy($masterLess, $userLess);
         }
 
         $lines = file($userLess);
 
         $colors = array();
 
-        $colors['grey']    = array('title' => 'Background Color',          'hex' => substr(explode('@grey: ',            $lines[4])[1],  0, -2));
-        $colors['primary'] = array('title' => 'Primary Color',             'hex' => substr(explode('@primaryColor: ',    $lines[6])[1],  0, -2));
-        $colors['info']    = array('title' => 'Information Color',         'hex' => substr(explode('@infoColor: ',       $lines[10])[1],  0, -2));
-        $colors['success'] = array('title' => 'Success Color',             'hex' => substr(explode('@successColor: ',    $lines[13])[1], 0, -2));
-        $colors['warning'] = array('title' => 'Warning Color',             'hex' => substr(explode('@warningColor: ',    $lines[16])[1], 0, -2));
-        $colors['error']   = array('title' => 'Error Color',               'hex' => substr(explode('@errorColor: ',      $lines[19])[1], 0, -2));
-        $colors['menu']    = array('title' => 'Active Menu Link Color',    'hex' => substr(explode('@menuColor: ',       $lines[22])[1], 0, -2));
+        $colors['grey']    = array('title' => 'Background Color',          'hex' => substr(explode('@grey: ',            $lines[0])[1],  0, -2));
+        $colors['primary'] = array('title' => 'Primary Color',             'hex' => substr(explode('@primaryColor: ',    $lines[2])[1],  0, -2));
+        $colors['info']    = array('title' => 'Information Color',         'hex' => substr(explode('@infoColor: ',       $lines[6])[1],  0, -2));
+        $colors['success'] = array('title' => 'Success Color',             'hex' => substr(explode('@successColor: ',    $lines[9])[1],  0, -2));
+        $colors['warning'] = array('title' => 'Warning Color',             'hex' => substr(explode('@warningColor: ',    $lines[12])[1], 0, -2));
+        $colors['error']   = array('title' => 'Error Color',               'hex' => substr(explode('@errorColor: ',      $lines[15])[1], 0, -2));
+        $colors['menu']    = array('title' => 'Active Menu Link Color',    'hex' => substr(explode('@menuColor: ',       $lines[18])[1], 0, -2));
 
         $this->setViewData('colors', $colors);
     }
@@ -206,19 +206,19 @@ class Core_UserController extends BaseController {
         $input = e_array(Input::all());
 
         if ($input != null) {
-            $userLess = public_path() .'/css/users/'. Str::studly($this->activeUser->username) .'_css.less';
+            $userLess = public_path() .'/css/users/'. Str::studly($this->activeUser->username) .'.less';
             $userCss  = public_path() .'/css/users/'. Str::studly($this->activeUser->username) .'.css';
 
             $lines = file($userLess);
 
             // Set the new colors
-            $lines[4]  = '@grey: '. $input['grey'] .";\n";
-            $lines[6]  = '@primaryColor: '. $input['primary'] .";\n";
-            $lines[10]  = '@infoColor: '. $input['info'] .";\n";
-            $lines[13] = '@successColor: '. $input['success'] .";\n";
-            $lines[16] = '@warningColor: '. $input['warning'] .";\n";
-            $lines[19] = '@errorColor: '. $input['error'] .";\n";
-            $lines[22] = '@menuColor: '. $input['menu'] .";\n";
+            $lines[0]  = '@grey: '. $input['grey'] .";\n";
+            $lines[2]  = '@primaryColor: '. $input['primary'] .";\n";
+            $lines[6]  = '@infoColor: '. $input['info'] .";\n";
+            $lines[9]  = '@successColor: '. $input['success'] .";\n";
+            $lines[12] = '@warningColor: '. $input['warning'] .";\n";
+            $lines[15] = '@errorColor: '. $input['error'] .";\n";
+            $lines[18] = '@menuColor: '. $input['menu'] .";\n";
 
             File::delete($userLess);
             File::delete($userCss);
@@ -227,7 +227,7 @@ class Core_UserController extends BaseController {
 
             SSH::run(array(
                 'cd '. base_path(),
-                'lessc '. $userLess .' '. $userCss,
+                'gulp userCss'
             ));
 
             Ajax::setStatus('success');
@@ -237,9 +237,11 @@ class Core_UserController extends BaseController {
 
     public function getResetCss()
     {
-        $userLess = public_path() .'/css/users/'. Str::studly($this->activeUser->username) .'.css';
+        $userLess = public_path() .'/css/users/'. Str::studly($this->activeUser->username) .'.less';
+        $userCss  = public_path() .'/css/users/'. Str::studly($this->activeUser->username) .'.css';
 
         File::delete($userLess);
+        File::delete($userCss);
 
         $this->redirect('/user/account#change-theme', 'Your theme has been reset to the site default.');
     }
