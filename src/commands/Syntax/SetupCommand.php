@@ -181,9 +181,6 @@ class SetupCommand extends Command {
 			case 'chat':
 				return $this->setUpChat();
 			break;
-			case 'forum':
-				return $this->setUpForum();
-			break;
 			case 'steam-api':
 				return $this->setUpSteam();
 			break;

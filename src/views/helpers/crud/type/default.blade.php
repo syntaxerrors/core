@@ -77,10 +77,6 @@
 </div>
 @include('helpers.helpModal')
 
-@section('jsInclude')
-	{{ HTML::script('/js/crud.js') }}
-@stop
-
 <script>
 	@section('onReadyJs')
 		// Make twitter paginator ajax
