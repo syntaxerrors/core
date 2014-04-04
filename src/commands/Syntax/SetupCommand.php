@@ -26,14 +26,7 @@ class SetupCommand extends Command {
 	 *
 	 * @var string[]
 	 */
-	protected $packages = ['chat', 'forum'];
-
-	/**
-	 * An array of packages that will need a config loaded
-	 *
-	 * @var string[]
-	 */
-	protected $packagesWithConfig = ['chat'];
+	protected $packages = ['chat', 'forum', 'steam-api'];
 
 	/**
 	 * An object containing the core config details
@@ -57,6 +50,20 @@ class SetupCommand extends Command {
 	protected $chatConfig;
 
 	/**
+	 * An object containing the forum config details
+	 *
+	 * @var string[]
+	 */
+	protected $forumDetails;
+
+	/**
+	 * An object containing the steam config details
+	 *
+	 * @var string[]
+	 */
+	protected $steamDetails;
+
+	/**
 	 * The output stream for any artisan commands
 	 *
 	 * @var string
@@ -72,9 +79,11 @@ class SetupCommand extends Command {
 	{
 		parent::__construct();
 
-		$this->coreDetails = new stdClass();
-		$this->chatDetails = new stdClass();
-		$this->stream      = fopen('php://output', 'w');
+		$this->coreDetails  = new stdClass();
+		$this->chatDetails  = new stdClass();
+		$this->forumDetails = new stdClass();
+		$this->steamDetails = new stdClass();
+		$this->stream       = fopen('php://output', 'w');
 	}
 
 	/**
@@ -119,6 +128,22 @@ class SetupCommand extends Command {
 					return $this->configureChat();
 				}
 			break;
+			case 'forum':
+				$this->line($this->forumDetails ."\n");
+				if (!$this->confirm('Do you want to keep this configuration? [yes|no]')) {
+					return $this->setUpForum();
+				} else {
+					return $this->configureForum();
+				}
+			break;
+			case 'steam':
+				$this->line($this->steamDetails ."\n");
+				if (!$this->confirm('Do you want to keep this configuration? [yes|no]')) {
+					return $this->setUpSteam();
+				} else {
+					return $this->configureSteam();
+				}
+			break;
 		}
 	}
 
@@ -156,13 +181,19 @@ class SetupCommand extends Command {
 			case 'chat':
 				return $this->setUpChat();
 			break;
+			case 'forum':
+				return $this->setUpForum();
+			break;
+			case 'steam-api':
+				return $this->setUpSteam();
+			break;
 		}
 	}
 
 	protected function setUpCore()
 	{
 		// Set up our syntax config
-		$this->comment('Setting up syntax details...');
+		$this->comment('Setting up core details...');
 		$this->coreDetails->controlRoomDetail = $this->ask('What is this site\'s control room name?');
 		$this->coreDetails->siteName          = $this->ask('What is this name to display for this site?');
 		$this->coreDetails->siteIcon          = $this->ask('What is this icon to display for this site? (Use tha last part of the font-awesome icon class)');
@@ -174,7 +205,7 @@ class SetupCommand extends Command {
 	protected function setUpChat()
 	{
 		// Set up our syntax config
-		$this->comment('Setting up syntax details...');
+		$this->comment('Setting up chat details...');
 		$this->chatDetails->debug             = $this->confirm('Should the chats show debug info?  [Hit enter to leave as true]', true) ? true : false;
 		$this->chatDetails->port              = $this->ask('What is the chat port?  [Hit enter to leave as 1337]', 1337);
 		$this->chatDetails->backLog           = $this->ask('How much back log should the chats get?  [Hit enter to leave as 100]', 100);
@@ -185,6 +216,28 @@ class SetupCommand extends Command {
 		$this->chatConfig = json_encode($this->chatDetails, JSON_PRETTY_PRINT);
 
 		$this->confirmConfig('chat');
+	}
+
+	protected function setUpForum()
+	{
+		// Set up our syntax config
+		$this->comment('Setting up forum details...');
+		$this->forumDetails->forumNews = $this->confirm('Will this site use forum posts on the front page?  [Hit enter to leave as true]', true) ? true : false;
+
+		$this->confirmConfig('forum');
+	}
+
+	protected function setUpSteam()
+	{
+		// Set up our syntax config
+		$this->comment('Setting up steam api details...');
+		$this->steamDetails->steamApiKey = $this->ask('What is your steam api key?');
+
+		while ($this->steamDetails->steamApiKey == null) {
+			$this->steamDetails->steamApiKey = $this->ask('This cannot be empty.  What is your steam api key?');
+		}
+
+		$this->confirmConfig('steam');
 	}
 
 	/********************************************************************
@@ -206,6 +259,28 @@ class SetupCommand extends Command {
 	{
 		list($path, $contents) = $this->getConfig('packages/syntax/chat/chatConfig.json');
 		File::put($path, $this->chatConfig);
+	}
+
+	protected function configureForum()
+	{
+		list($path, $contents) = $this->getConfig('packages/syntax/forum/config.php');
+
+		foreach ($this->forumDetails as $key => $value) {
+			$contents = str_replace($this->laravel['config']['forum::'. $key], $value, $contents);
+		}
+
+		File::put($path, $contents);
+	}
+
+	protected function configureSteam()
+	{
+		list($path, $contents) = $this->getConfig('packages/syntax/steam-api/config.php');
+
+		foreach ($this->steamDetails as $key => $value) {
+			$contents = str_replace($this->laravel['config']['steam-api::'. $key], $value, $contents);
+		}
+
+		File::put($path, $contents);
 	}
 
 	/********************************************************************
