@@ -73,7 +73,9 @@ class Core_BaseController extends Controller {
 				->map(function($item) {
 					if ($item->hasChildren()) {
 						$item->getContent()->addClass('dropdown-toggle')->dataToggle('dropdown');
-						$item->getContent()->value($item->getContent()->getValue() .' <b class="caret"></b>');
+						if (strpos($item->getContent(), 'class="caret"') === false) {
+							$item->getContent()->value($item->getContent()->getValue() .' <b class="caret"></b>');
+						}
 						$item->getChildren()->addClass('dropdown-menu');
 					}
 				});
@@ -81,7 +83,9 @@ class Core_BaseController extends Controller {
 				->map(function($item) {
 					if ($item->hasChildren()) {
 						$item->getContent()->addClass('dropdown-toggle')->dataToggle('dropdown');
-						$item->getContent()->value($item->getContent()->getValue() .' <b class="caret"></b>');
+						if (strpos($item->getContent(), 'class="caret"') === false) {
+							$item->getContent()->value($item->getContent()->getValue() .' <b class="caret"></b>');
+						}						
 						$item->getChildren()->addClass('dropdown-menu');
 					}
 				});
