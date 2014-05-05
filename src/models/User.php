@@ -8,7 +8,7 @@ use Hash;
 use Str;
 use Session;
 
-class User extends \BaseModel implements UserInterface, RemindableInterface
+abstract class User extends \BaseModel implements UserInterface, RemindableInterface
 {
 	/********************************************************************
 	 * Declarations
